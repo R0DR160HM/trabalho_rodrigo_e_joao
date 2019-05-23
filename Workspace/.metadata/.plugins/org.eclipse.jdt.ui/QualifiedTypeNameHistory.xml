@@ -2,4 +2,11 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="produtos.Produtos"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="produtos.Vinho"/>
+    <fullyQualifiedTypeName name="jdk.nashorn.internal.runtime.regexp.joni.ast.QuantifierNode"/>
+    <fullyQualifiedTypeName name="produtos.Queijo"/>
+    <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+    <fullyQualifiedTypeName name="com.sun.accessibility.internal.resources.accessibility"/>
+    <fullyQualifiedTypeName name="acao.Acao"/>
 </qualifiedTypeNameHistroy>

@@ -1,10 +1,15 @@
 package formulariosAdmin;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import acao.Acao;
+import dados.Vetor;
+import produtos.Queijo;
+import produtos.Vinho;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,6 +21,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
+import java.awt.font.TextMeasurer;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
@@ -35,9 +41,6 @@ public class JCadastrar extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		//Instanciar objeto da classe Acao
-		Acao a = new Acao();
 		
 		JLabel lblNewLabel = new JLabel("Cadastrar Produto");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -203,12 +206,13 @@ public class JCadastrar extends JFrame {
 			
 				if (rdVinho.isSelected() == true) {
 					
-					a.cadastrarVinho(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxCor.getSelectedItem().toString(), cbxTipo.getSelectedItem().toString());
-					
+					Vinho v = new Vinho(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxCor.getSelectedItem().toString(), cbxTipo.getSelectedItem().toString());
+					Vetor.vetorProdutos.add(v);
 
 				}else if (rdChamp.isSelected() == true) {
 					
-					a.cadastrarQueijo(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxAnimal.getSelectedItem().toString(), cbxTex.getSelectedItem().toString());
+					Queijo q = new Queijo(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxAnimal.getSelectedItem().toString(), cbxTex.getSelectedItem().toString());
+					Vetor.vetorProdutos.add(q);
 					
 				}else {
 					JOptionPane.showMessageDialog(null, "Selecione um tipo de produto");
