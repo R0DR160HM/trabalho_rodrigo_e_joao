@@ -96,7 +96,7 @@ public class Acao {
 		DefaultTableModel dadosTabela = new DefaultTableModel();
 		dadosTabela.addColumn("Nome");
 		dadosTabela.addColumn("Marca");
-		dadosTabela.addColumn("PdO");
+		dadosTabela.addColumn("Origem");
 		dadosTabela.addColumn("Valor");
 		
 		for(int i=0; i<Vetor.vetorProdutos.size(); i++) {
@@ -123,6 +123,27 @@ public class Acao {
 			}
 			
 		}
+		return valida;
+	}
+	
+	//Metodo para validar se tem algo escrito
+	public boolean validar1(String a) {
+		boolean valida = true;
+		
+		if (a.equals("")) {
+			JOptionPane.showMessageDialog(null, "Insira um produto");
+			valida= false;
+		}		
+		return valida;
+	}
+	
+	//Metodo para validar se o array produto tem algo
+	public boolean validar2() {
+		boolean valida = true;
+		if (Vetor.vetorProdutos.size() == 0) {
+			JOptionPane.showMessageDialog(null, "Nao ha nenhum produto cadastrado");
+			valida= false;
+		}		
 		return valida;
 	}
 }

@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import acao.Acao;
+import dados.Vetor;
 import formulario.AlterarDados;
 import formulario.Formulario;
 import formulariosAdmin.Queijos;
@@ -30,6 +32,7 @@ public class JComum extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtPesquisa;
 	private JTable table;
+	private JTable table_1;
 
 	public JComum() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,7 +45,7 @@ public class JComum extends JFrame {
 		
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(5, 5, 455, 287);
+		panel.setBounds(5, 5, 455, 207);
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.add(panel);
@@ -64,7 +67,7 @@ public class JComum extends JFrame {
 		btnPesquisar.setBounds(404, 64, 40, 25);
 		
 		JPanel painelDepartamentos = new JPanel();
-		painelDepartamentos.setBounds(0, 0, 146, 193);
+		painelDepartamentos.setBounds(0, 0, 146, 207);
 		painelDepartamentos.setBackground(new Color(0, 206, 209));
 		painelDepartamentos.setVisible(false);
 		panel.setLayout(null);
@@ -73,6 +76,29 @@ public class JComum extends JFrame {
 		painelCarrinho.setBackground(new Color(215, 255, 15));
 		painelCarrinho.setBounds(242, 0, 213, 193);
 		painelCarrinho.setVisible(false);
+		
+		JPanel painelPesquisa = new JPanel();
+		painelPesquisa.setBackground(Color.LIGHT_GRAY);
+		painelPesquisa.setBounds(37, 89, 366, 104);
+		panel.add(painelPesquisa);
+		painelPesquisa.setVisible(false);
+		painelPesquisa.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 24, 346, 69);
+		painelPesquisa.add(scrollPane);
+		
+		table = new JTable();
+		
+		scrollPane.setViewportView(table);
+		
+		JButton btnSaiP = new JButton("");
+		
+		btnSaiP.setIcon(new ImageIcon(JComum.class.getResource("/imagens/X c\u00F3pia.png")));
+		btnSaiP.setBorderPainted(false);
+		btnSaiP.setBackground(Color.LIGHT_GRAY);
+		btnSaiP.setBounds(338, 4, 19, 19);
+		painelPesquisa.add(btnSaiP);
 		panel.add(painelCarrinho);
 		painelCarrinho.setLayout(null);
 		
@@ -94,8 +120,10 @@ public class JComum extends JFrame {
 		tableCarrinho.setBounds(10, 41, 193, 141);
 		painelCarrinho.add(tableCarrinho);
 		
-		table = new JTable();
-		tableCarrinho.setViewportView(table);
+		table_1 = new JTable();
+		tableCarrinho.setViewportView(table_1);
+		
+		
 		panel.add(painelDepartamentos);
 		painelDepartamentos.setLayout(null);
 		
@@ -174,6 +202,7 @@ public class JComum extends JFrame {
 		panel_3.setBounds(435, 100, -94, 161);
 		panel.add(panel_3);
 		
+		Acao a = new Acao();
 		//Ações do botao de usuario
 		btnUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -242,15 +271,47 @@ public class JComum extends JFrame {
 			}
 		});
 		
+		
 		//Ação do botao pesquisar
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			if(txtPesquisa.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Insira um produto");
-			}else {
-				
-			}
+							
+				if((a.validar1(txtPesquisa.getText()) == true) && (a.validar2() == true)) {
+					String text = txtPesquisa.getText();
+					
+					if(a.Analisar(text) == true) {
+					painelPesquisa.setVisible(true); 
+					btnDepartamentos.setEnabled(false);
+					btnDepartamentos.setVisible(false);					
+					btnUsuario.setEnabled(false);					
+					btnPesquisar.setEnabled(false);					
+					btnLogout.setEnabled(false);
+					txtPesquisa.setEnabled(false);
+					table.setModel(a.atualizar(text));
+					
+					}else {
+						JOptionPane.showMessageDialog(null, "Produto nao existe em estoque");
+						
+					}
+				}
 			
+				txtPesquisa.setText("");
+				txtPesquisa.requestFocus();
+			}
+		});
+		
+		//Botao sair da tabela de pesquisa
+		btnSaiP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painelPesquisa.setVisible(false); 
+				btnDepartamentos.setEnabled(true);
+				btnDepartamentos.setVisible(true);				
+				btnUsuario.setEnabled(true);				
+				btnPesquisar.setEnabled(true);				
+				btnLogout.setEnabled(true);
+				txtPesquisa.setEnabled(true);
+				txtPesquisa.setText("");
+				txtPesquisa.requestFocus();
 			}
 		});
 		
@@ -280,7 +341,7 @@ public class JComum extends JFrame {
 				btnCarrinho.setEnabled(true);
 				btnCarrinho.setVisible(true);
 				btnLogout.setEnabled(true);
-			}
-		});
+					}
+				});
 	}
 }

@@ -82,6 +82,7 @@ public class FAdmin extends JFrame {
 		painelDepartamentos.setVisible(false);
 		
 		painelPesquisa = new JPanel();
+		painelPesquisa.setBackground(Color.LIGHT_GRAY);
 		painelPesquisa.setBounds(17, 80, 382, 179);
 		contentPane.add(painelPesquisa);
 		painelPesquisa.setLayout(null);
@@ -98,7 +99,7 @@ public class FAdmin extends JFrame {
 		
 		btnSaiP.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/X c\u00F3pia.png")));
 		btnSaiP.setBorderPainted(false);
-		btnSaiP.setBackground(Color.WHITE);
+		btnSaiP.setBackground(Color.LIGHT_GRAY);
 		btnSaiP.setBounds(353, 11, 19, 19);
 		painelPesquisa.add(btnSaiP);
 		
@@ -197,14 +198,8 @@ public class FAdmin extends JFrame {
 		//Ação do botão Pesquisar
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-			if(txtPesquisa.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Insira um produto");
-			}else if(Vetor.vetorProdutos.size() == 0) {
-				JOptionPane.showMessageDialog(null, "Cadastre um produto");
-				
-			}else {
+								
+			if((a.validar1(txtPesquisa.getText()) == true) && (a.validar2() == true)) {
 				String text = txtPesquisa.getText();
 				
 				if(a.Analisar(text) == true) {
@@ -221,12 +216,12 @@ public class FAdmin extends JFrame {
 				table.setModel(a.atualizar(text));
 				
 				}else {
-					JOptionPane.showMessageDialog(null, "Produto nao existe em estoque");
-					txtPesquisa.setText("");
-					txtPesquisa.requestFocus();
+					JOptionPane.showMessageDialog(null, "Produto nao existe em estoque");					
 				}
 			}
 			
+			txtPesquisa.setText("");
+			txtPesquisa.requestFocus();
 			}
 		});
 		
@@ -237,10 +232,8 @@ public class FAdmin extends JFrame {
 						btnDepartamentos.setEnabled(true);
 						btnDepartamentos.setVisible(true);
 						btnCadastrar.setEnabled(true);
-						btnUsuario.setEnabled(true);
-						btnAlterar.setEnabled(true);
-						btnPesquisar.setEnabled(true);
-						btnExcluir.setEnabled(true);
+						btnUsuario.setEnabled(true);						
+						btnPesquisar.setEnabled(true);						
 						btnLogout.setEnabled(true);
 						txtPesquisa.setEnabled(true);
 						txtPesquisa.setText("");

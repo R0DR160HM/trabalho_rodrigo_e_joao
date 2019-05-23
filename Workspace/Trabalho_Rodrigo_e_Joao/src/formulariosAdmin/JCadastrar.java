@@ -202,18 +202,35 @@ public class JCadastrar extends JFrame {
 			
 			
 				if (rdVinho.isSelected() == true) {
+					//Pega as informacoe e adiciona ao array
+					a.cadastrarVinho(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxCor.getSelectedItem().toString(), cbxTipo.getSelectedItem().toString());				
 					
-					a.cadastrarVinho(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxCor.getSelectedItem().toString(), cbxTipo.getSelectedItem().toString());
-					setVisible(false);
-					FAdmin frame = new FAdmin();
-					frame.setVisible(true);
+					//Limpa os campos
+					txtNome.setText("");
+					txtPais.setText("");
+					txtMarca.setText("");
+					txtPreco.setText("");
+					cbxCor.setSelectedIndex(0);
+					cbxTipo.setSelectedIndex(0);
 					
+					//O ponteiro volta ao nome
+					txtNome.requestFocus();
 				}else if (rdChamp.isSelected() == true) {
 					
-					a.cadastrarQueijo(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxAnimal.getSelectedItem().toString(), cbxTex.getSelectedItem().toString());
-					setVisible(false);
-					FAdmin frame = new FAdmin();
-					frame.setVisible(true);
+					//Pega as informacoe e adiciona ao array
+					a.cadastrarQueijo(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxAnimal.getSelectedItem().toString(), cbxTex.getSelectedItem().toString());					
+					
+					//Limpa os campos
+
+					txtNome.setText("");
+					txtPais.setText("");
+					txtMarca.setText("");
+					txtPreco.setText("");
+					cbxAnimal.setSelectedIndex(0);
+					cbxTex.setSelectedIndex(0);
+					
+					//O ponteiro volta ao nome
+					txtNome.requestFocus();
 				}else {
 					JOptionPane.showMessageDialog(null, "Selecione um tipo de produto");
 				}
