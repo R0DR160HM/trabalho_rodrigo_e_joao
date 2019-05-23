@@ -1,0 +1,16 @@
+package dados;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import beans.Atributos;
+
+public class Vetor {
+	
+	//ArrayList para salvar usuários
+	public static List<Atributos> vetorUsuarios = new ArrayList<Atributos>();
+	
+
+
+
+}
