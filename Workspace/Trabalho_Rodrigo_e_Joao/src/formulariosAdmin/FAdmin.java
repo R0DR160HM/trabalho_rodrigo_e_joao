@@ -17,6 +17,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.event.ChangeListener;
 
+import acao.Acao;
+import dados.Vetor;
 import formulario.AlterarDados;
 import formulario.Formulario;
 
@@ -31,6 +33,8 @@ import java.awt.event.ContainerEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.Font;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class FAdmin extends JFrame {
 
@@ -45,6 +49,9 @@ public class FAdmin extends JFrame {
 	private JButton btnVinho;
 	private JButton btnQueijos;
 	private JLabel lblDepartamentos;
+	private JPanel painelPesquisa;
+	private JScrollPane scrollPane;
+	private JTable table;
 
 	public FAdmin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,6 +80,29 @@ public class FAdmin extends JFrame {
 		painelDepartamentos.setBackground(new Color(0, 206, 209));
 		painelDepartamentos.setBounds(0, 0, 142, 270);
 		painelDepartamentos.setVisible(false);
+		
+		painelPesquisa = new JPanel();
+		painelPesquisa.setBounds(17, 80, 382, 179);
+		contentPane.add(painelPesquisa);
+		painelPesquisa.setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 30, 362, 138);
+		painelPesquisa.add(scrollPane);
+		painelPesquisa.setVisible(false);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		JButton btnSaiP = new JButton("");
+		
+		btnSaiP.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/X c\u00F3pia.png")));
+		btnSaiP.setBorderPainted(false);
+		btnSaiP.setBackground(Color.WHITE);
+		btnSaiP.setBounds(353, 11, 19, 19);
+		painelPesquisa.add(btnSaiP);
+		
+		
 		contentPane.add(painelDepartamentos);
 		painelDepartamentos.setLayout(null);
 		
@@ -153,7 +183,7 @@ public class FAdmin extends JFrame {
 		btnLogout.setBounds(350, 13, 34, 26);
 		contentPane.add(btnLogout);
 	
-
+		Acao a = new Acao();
 		//Açao do botao de usuario
 		btnUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -167,17 +197,56 @@ public class FAdmin extends JFrame {
 		//Ação do botão Pesquisar
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 			if(txtPesquisa.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "Insira um produto");
-			}else {
+			}else if(Vetor.vetorProdutos.size() == 0) {
+				JOptionPane.showMessageDialog(null, "Cadastre um produto");
 				
+			}else {
+				String text = txtPesquisa.getText();
+				
+				if(a.Analisar(text) == true) {
+				painelPesquisa.setVisible(true); 
+				btnDepartamentos.setEnabled(false);
+				btnDepartamentos.setVisible(false);
+				btnCadastrar.setEnabled(false);
+				btnUsuario.setEnabled(false);
+				btnAlterar.setEnabled(false);
+				btnPesquisar.setEnabled(false);
+				btnExcluir.setEnabled(false);
+				btnLogout.setEnabled(false);
+				txtPesquisa.setEnabled(false);
+				table.setModel(a.atualizar(text));
+				
+				}else {
+					JOptionPane.showMessageDialog(null, "Produto nao existe em estoque");
+					txtPesquisa.setText("");
+					txtPesquisa.requestFocus();
+				}
 			}
 			
 			}
 		});
 		
-		
-		
+		//Botao sair da tabela de pesquisa
+				btnSaiP.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						painelPesquisa.setVisible(false); 
+						btnDepartamentos.setEnabled(true);
+						btnDepartamentos.setVisible(true);
+						btnCadastrar.setEnabled(true);
+						btnUsuario.setEnabled(true);
+						btnAlterar.setEnabled(true);
+						btnPesquisar.setEnabled(true);
+						btnExcluir.setEnabled(true);
+						btnLogout.setEnabled(true);
+						txtPesquisa.setEnabled(true);
+						txtPesquisa.setText("");
+						txtPesquisa.requestFocus();
+					}
+				});
 		
 		//Ação de cadastrar
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -185,7 +254,7 @@ public class FAdmin extends JFrame {
 				JCadastrar cadastra = new JCadastrar();
 				setVisible(false);
 				cadastra.setVisible(true);
-			
+				
 			}
 		});
 		

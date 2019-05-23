@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.table.DefaultTableModel;
 
 import beans.Atributos;
 import dados.Vetor;
@@ -26,6 +27,7 @@ public class Acao {
 		try {
 		Vinho v = new Vinho(nome, pais, marca, valor, cor, tipo);
 		Vetor.vetorProdutos.add(v);
+		JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
 		}catch (Exception erro) {
 			JOptionPane.showMessageDialog(null, "Insira um valor válido");
 		}
@@ -38,6 +40,7 @@ public class Acao {
 		try {
 		Queijo q = new Queijo(nome, pais, marca, valor, animal, textura);
 		Vetor.vetorProdutos.add(q);
+		JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
 		}catch (Exception erro) {
 			JOptionPane.showMessageDialog(null, "Insira um valor válido");
 		}
@@ -88,6 +91,38 @@ public class Acao {
 		
 	}
 	
+	//Atualizar a tabela de pesquisa
+	public DefaultTableModel atualizar(String a) {
+		DefaultTableModel dadosTabela = new DefaultTableModel();
+		dadosTabela.addColumn("Nome");
+		dadosTabela.addColumn("Marca");
+		dadosTabela.addColumn("PdO");
+		dadosTabela.addColumn("Valor");
+		
+		for(int i=0; i<Vetor.vetorProdutos.size(); i++) {
+			
+			if(Vetor.vetorProdutos.get(i).getNome().startsWith(a)) {
+			dadosTabela.addRow(new Object[] {Vetor.vetorProdutos.get(i).getNome(), Vetor.vetorProdutos.get(i).getMarca(), Vetor.vetorProdutos.get(i).getPais(), Vetor.vetorProdutos.get(i).getValor()});
+			}
+		}
+			
+
+		return dadosTabela;
+	}
 	
-	
+
+
+	//Verificar se existe um produto cadastrado
+	public boolean Analisar(String a) {
+		boolean valida = false;
+		
+		for(int i=0; i<Vetor.vetorProdutos.size(); i++) {
+		
+			if(Vetor.vetorProdutos.get(i).getNome().startsWith(a)) {
+				valida = true;
+			}
+			
+		}
+		return valida;
+	}
 }

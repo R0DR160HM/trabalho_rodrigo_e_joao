@@ -52,7 +52,7 @@ public class Formulario extends JFrame {
 		
 		JLabel lblSenha = new JLabel("Senha");
 		lblSenha.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 25));
-		lblSenha.setBounds(56, 121, 63, 17);
+		lblSenha.setBounds(56, 121, 75, 17);
 		contentPane.add(lblSenha);
 		
 		

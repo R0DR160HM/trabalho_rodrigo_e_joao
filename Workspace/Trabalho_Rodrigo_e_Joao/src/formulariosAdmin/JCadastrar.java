@@ -204,12 +204,16 @@ public class JCadastrar extends JFrame {
 				if (rdVinho.isSelected() == true) {
 					
 					a.cadastrarVinho(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxCor.getSelectedItem().toString(), cbxTipo.getSelectedItem().toString());
+					setVisible(false);
+					FAdmin frame = new FAdmin();
+					frame.setVisible(true);
 					
-
 				}else if (rdChamp.isSelected() == true) {
 					
 					a.cadastrarQueijo(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxAnimal.getSelectedItem().toString(), cbxTex.getSelectedItem().toString());
-					
+					setVisible(false);
+					FAdmin frame = new FAdmin();
+					frame.setVisible(true);
 				}else {
 					JOptionPane.showMessageDialog(null, "Selecione um tipo de produto");
 				}
