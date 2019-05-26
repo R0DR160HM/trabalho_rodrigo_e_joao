@@ -1,23 +1,17 @@
 package formulario;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
-import acao.Acao;
 import beans.Atributos;
 import dados.Vetor;
 import formulariosAdmin.FAdmin;
 import formulariosUsuario.JComum;
-import principal.Principal;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -29,11 +23,8 @@ public class AlterarDados extends JFrame {
 
 
 
-	/**
-	 * Create the frame.
-	 */
-	public AlterarDados() {
-		
+	//Criar formulário
+	public AlterarDados() {		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 347, 238);
 		contentPane = new JPanel();
@@ -42,24 +33,18 @@ public class AlterarDados extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		Acao a = new Acao();
+		
+		
+		//Instanciar objeto da classe Atributos
 		Atributos at = new Atributos();
 		
+		
+		
+		//Rótulos
 		JLabel lblAlterarDadosDe = new JLabel("Alterar Dados de:");
 		lblAlterarDadosDe.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblAlterarDadosDe.setBounds(124, 11, 144, 36);
 		contentPane.add(lblAlterarDadosDe);
-		
-		JButton btnAlterarSenha = new JButton("Alterar Senha");
-		btnAlterarSenha.setBackground(Color.WHITE);
-		btnAlterarSenha.setBounds(171, 67, 134, 36);
-		contentPane.add(btnAlterarSenha);
-		
-		JButton btnAlterarEmail = new JButton("Alterar E-mail");
-		btnAlterarEmail.setBackground(Color.WHITE);
-		btnAlterarEmail.setBounds(10, 67, 134, 36);
-		contentPane.add(btnAlterarEmail);
-		
 		JLabel lblEmail = new JLabel("E-mail Atual: "+Vetor.vetorUsuarios.get(Formulario.indice).getEmail());
 		lblEmail.setBounds(10, 123, 371, 14);
 		contentPane.add(lblEmail);
@@ -72,7 +57,28 @@ public class AlterarDados extends JFrame {
 		lblHorrioDeCriao.setBounds(11, 175, 416, 14);
 		contentPane.add(lblHorrioDeCriao);
 		
+		
+		
+		//Botões
+		JButton btnAlterarSenha = new JButton("Alterar Senha");
+		btnAlterarSenha.setBackground(Color.WHITE);
+		btnAlterarSenha.setBounds(171, 67, 134, 36);
+		contentPane.add(btnAlterarSenha);
+		
+		JButton btnAlterarEmail = new JButton("Alterar E-mail");
+		btnAlterarEmail.setBackground(Color.WHITE);
+		btnAlterarEmail.setBounds(10, 67, 134, 36);
+		contentPane.add(btnAlterarEmail);
+		
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.setBounds(10, 11, 89, 23);
+		btnVoltar.setBorderPainted(false);
+		btnVoltar.setBackground(new Color(239, 239, 239));
+		contentPane.add(btnVoltar);
+		
+		
+		
+		//Ações dos botões
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -87,13 +93,8 @@ public class AlterarDados extends JFrame {
 				}
 			}
 		});
-		btnVoltar.setBounds(10, 11, 89, 23);
-		btnVoltar.setBorderPainted(false);
-		btnVoltar.setBackground(new Color(239, 239, 239));
-		contentPane.add(btnVoltar);
-		
-		
-		
+
+		//=-=-=-=-=
 		
 		btnAlterarSenha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,7 +124,7 @@ public class AlterarDados extends JFrame {
 			}
 		});
 		
-		
+		//=-=-=-=-=
 		
 		btnAlterarEmail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

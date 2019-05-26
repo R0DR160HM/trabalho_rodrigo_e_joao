@@ -3,7 +3,7 @@ package beans;
 public class Atributos {
 	
 	
-	//Atributos
+	//Atributos do Usuário
 	private String senha, email, data, hora;
 	private boolean admin;
 

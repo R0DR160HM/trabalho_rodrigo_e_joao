@@ -38,9 +38,11 @@ public class CriarUsuario extends JFrame {
 		contentPane.setLayout(null);
 		
 		
+		
 		//Instanciar objetos das classes Atributos e Acao
 		Atributos at = new Atributos();
 		Acao a = new Acao();
+		
 		
 		
 		//Rótulos
@@ -65,6 +67,7 @@ public class CriarUsuario extends JFrame {
 		contentPane.add(lblEmail);
 		
 		
+		
 		//Campos de senha
 		passSenha = new JPasswordField();
 		passSenha.setBounds(206, 162, 256, 20);
@@ -75,11 +78,13 @@ public class CriarUsuario extends JFrame {
 		contentPane.add(passConfirm);
 		
 		
+		
 		//Campos de texto
 		textEmail = new JTextField();
 		textEmail.setBounds(206, 109, 256, 20);
 		contentPane.add(textEmail);
 		textEmail.setColumns(10);
+		
 		
 		
 		//Botões
@@ -93,6 +98,7 @@ public class CriarUsuario extends JFrame {
 		btnVoltar.setBorderPainted(false);
 		btnVoltar.setBackground(new Color(239, 239, 239));
 		contentPane.add(btnVoltar);
+		
 		
 		
 		//Ações dos botões

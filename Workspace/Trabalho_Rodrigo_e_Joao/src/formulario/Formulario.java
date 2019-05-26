@@ -40,8 +40,10 @@ public class Formulario extends JFrame {
 		contentPane.setLayout(null);
 		
 		
+		
 		//Instanciar objeto da classe Acao
 		Acao a = new Acao();
+		
 		
 		
 		//Rótulos
@@ -54,6 +56,7 @@ public class Formulario extends JFrame {
 		lblSenha.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 25));
 		lblSenha.setBounds(56, 121, 75, 17);
 		contentPane.add(lblSenha);
+		
 		
 		
 		//Botões
@@ -70,10 +73,12 @@ public class Formulario extends JFrame {
 		contentPane.add(bnCadastrar);
 		
 		
+		
 		//Campo de senha
 		passwordField = new JPasswordField();
 		passwordField.setBounds(167, 123, 211, 20);
 		contentPane.add(passwordField);
+		
 		
 		
 		//Campo de texto
@@ -81,6 +86,7 @@ public class Formulario extends JFrame {
 		textEmail.setBounds(167, 70, 211, 20);
 		contentPane.add(textEmail);
 		textEmail.setColumns(10);
+		
 		
 		
 		//Ações dos botões

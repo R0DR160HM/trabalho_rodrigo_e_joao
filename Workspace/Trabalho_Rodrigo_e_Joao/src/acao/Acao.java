@@ -13,11 +13,13 @@ import produtos.Vinho;
 
 public class Acao {
 	
-	//Cadastrar ao ArrayList
+	//Cadastrar usuário ao ArrayList
 	public void cadastrarUsuarios(Atributos at) {
+		
 		Vetor.vetorUsuarios.add(at);
 		
 	}
+	
 	
 	
 	
@@ -25,32 +27,54 @@ public class Acao {
 	public void cadastrarVinho(String nome, String pais, String marca, double valor, String cor, String tipo) {
 		
 		try {
+			
 		Vinho v = new Vinho(nome, pais, marca, valor, cor, tipo);
-		Vetor.vetorProdutos.add(v);
+		Vetor.vetorVinho.add(v);
 		JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
+		
 		}catch (Exception erro) {
+			
 			JOptionPane.showMessageDialog(null, "Insira um valor válido");
+		
 		}
 		
 	}
+	
+	
+	
 	
 	//Cadastrar queijos
 	public void cadastrarQueijo(String nome, String pais, String marca, double valor, String animal, String textura) {
 		
 		try {
+			
 		Queijo q = new Queijo(nome, pais, marca, valor, animal, textura);
-		Vetor.vetorProdutos.add(q);
+		Vetor.vetorQueijo.add(q);
 		JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
+		
 		}catch (Exception erro) {
+			
 			JOptionPane.showMessageDialog(null, "Insira um valor válido");
+		
 		}
+		
+	}
+	
+	
+	
+	
+	//Calcular o número de produtos cadastrados
+	public int calcular() {
+		
+		int resultado = Vetor.vetorQueijo.size() + Vetor.vetorVinho.size();
+		return resultado;
 		
 	}
 	
 	
 	
 	//Retornar data
-	public String data() {
+	public String data() {	
 		LocalDateTime date = LocalDateTime.now();
 		
 		int dia = date.getDayOfMonth();
@@ -58,8 +82,9 @@ public class Acao {
 		int ano = date.getYear();
 		String texto = dia+"/"+mes+"/"+ano;
 		
-		return texto;
+		return texto;	
 	}
+	
 	
 	
 	
@@ -91,59 +116,88 @@ public class Acao {
 		
 	}
 	
+	
+	
+	
 	//Atualizar a tabela de pesquisa
-	public DefaultTableModel atualizar(String a) {
+	public DefaultTableModel atualizar(String pesquisa) {
 		DefaultTableModel dadosTabela = new DefaultTableModel();
 		dadosTabela.addColumn("Nome");
 		dadosTabela.addColumn("Marca");
 		dadosTabela.addColumn("Origem");
 		dadosTabela.addColumn("Valor");
 		
-		for(int i=0; i<Vetor.vetorProdutos.size(); i++) {
+		for(int i=0; i<Vetor.vetorVinho.size(); i++) {
 			
-			if(Vetor.vetorProdutos.get(i).getNome().startsWith(a)) {
-			dadosTabela.addRow(new Object[] {Vetor.vetorProdutos.get(i).getNome(), Vetor.vetorProdutos.get(i).getMarca(), Vetor.vetorProdutos.get(i).getPais(), Vetor.vetorProdutos.get(i).getValor()});
+			if(Vetor.vetorVinho.get(i).getNome().startsWith(pesquisa)) {
+			dadosTabela.addRow(new Object[] {Vetor.vetorVinho.get(i).getNome(), Vetor.vetorVinho.get(i).getMarca(), Vetor.vetorVinho.get(i).getPais(), Vetor.vetorVinho.get(i).getValor()});
 			}
+			
+			if(Vetor.vetorQueijo.get(i).getNome().startsWith(pesquisa)) {
+				dadosTabela.addRow(new Object[] {Vetor.vetorQueijo.get(i).getNome(), Vetor.vetorQueijo.get(i).getMarca(), Vetor.vetorQueijo.get(i).getPais(), Vetor.vetorQueijo.get(i).getValor()});
+				}
+			
 		}
 			
 
 		return dadosTabela;
 	}
 	
+	
 
 
 	//Verificar se existe um produto cadastrado
-	public boolean Analisar(String a) {
+	public boolean Analisar(String pesquisa) {
+		
 		boolean valida = false;
 		
-		for(int i=0; i<Vetor.vetorProdutos.size(); i++) {
+		for(int i=0; i<Vetor.vetorVinho.size(); i++) {
 		
-			if(Vetor.vetorProdutos.get(i).getNome().startsWith(a)) {
+			if(Vetor.vetorVinho.get(i).getNome().startsWith(pesquisa)) {
 				valida = true;
 			}
 			
 		}
+		
+		for(int i=0; i<Vetor.vetorQueijo.size(); i++) {
+			
+			if(Vetor.vetorQueijo.get(i).getNome().startsWith(pesquisa)) {
+				valida = true;
+			}
+			
+		}
+		
 		return valida;
 	}
 	
-	//Metodo para validar se tem algo escrito
-	public boolean validar1(String a) {
+	
+	
+	
+	//Metodo para validar se há algo escrito
+	public boolean validar1(String texto) {
 		boolean valida = true;
 		
-		if (a.equals("")) {
+		if (texto.equals("")) {
 			JOptionPane.showMessageDialog(null, "Insira um produto");
 			valida= false;
 		}		
 		return valida;
 	}
 	
+	
+	
+	
 	//Metodo para validar se o array produto tem algo
 	public boolean validar2() {
 		boolean valida = true;
-		if (Vetor.vetorProdutos.size() == 0) {
-			JOptionPane.showMessageDialog(null, "Nao ha nenhum produto cadastrado");
+		if (calcular() == 0) {
+			JOptionPane.showMessageDialog(null, "Nao há nenhum produto cadastrado");
 			valida= false;
+	
 		}		
 		return valida;
 	}
+	
+	
+	
 }

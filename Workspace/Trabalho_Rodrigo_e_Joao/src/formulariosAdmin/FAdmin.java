@@ -1,37 +1,22 @@
 package formulariosAdmin;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
-import javax.security.auth.callback.TextOutputCallback;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.event.ChangeListener;
 
 import acao.Acao;
-import dados.Vetor;
 import formulario.AlterarDados;
 import formulario.Formulario;
 
-import javax.swing.event.ChangeEvent;
 import javax.swing.JTextField;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -53,6 +38,8 @@ public class FAdmin extends JFrame {
 	private JScrollPane scrollPane;
 	private JTable table;
 
+	
+	//Criar formulário
 	public FAdmin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 309);
@@ -62,53 +49,72 @@ public class FAdmin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//Criar botoes
-		JButton btnUsuario = new JButton("");
-		
-		btnDepartamentos = new JButton("");
-		
-		txtPesquisa = new JTextField();		
-		btnCadastrar = new JButton("Cadastrar Produto");
-		btnExcluir = new JButton("Excluir Produto");
-		btnAlterar = new JButton("Alterar Produto");
 		
 		
-		JButton btnPesquisar = new JButton("");
-		setVisible(false);
-		
+		//Painéis
 		JPanel painelDepartamentos = new JPanel();
 		painelDepartamentos.setBackground(new Color(0, 206, 209));
 		painelDepartamentos.setBounds(0, 0, 142, 270);
 		painelDepartamentos.setVisible(false);
+		painelDepartamentos.setLayout(null);
+		contentPane.add(painelDepartamentos);
 		
 		painelPesquisa = new JPanel();
 		painelPesquisa.setBackground(Color.LIGHT_GRAY);
 		painelPesquisa.setBounds(17, 80, 382, 179);
-		contentPane.add(painelPesquisa);
-		painelPesquisa.setLayout(null);
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 30, 362, 138);
 		painelPesquisa.add(scrollPane);
 		painelPesquisa.setVisible(false);
+		painelPesquisa.setLayout(null);
+		contentPane.add(painelPesquisa);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
 		
-		JButton btnSaiP = new JButton("");
+		//Instanciar objeto da classe Acao
+		Acao a = new Acao();
 		
+		
+		
+		//Botões
+		JButton btnUsuario = new JButton("");
+		
+		btnDepartamentos = new JButton("");
+		btnDepartamentos.setBackground(Color.WHITE);
+		btnDepartamentos.setBorderPainted(false);
+		btnDepartamentos.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/3riscos.PNG")));
+		btnDepartamentos.setBounds(17, 22, 28, 14);
+		contentPane.add(btnDepartamentos);
+				
+		btnCadastrar = new JButton("Cadastrar Produto");
+		btnCadastrar.setBackground(Color.WHITE);
+		btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		btnCadastrar.setBounds(287, 159, 125, 65);
+		contentPane.add(btnCadastrar);
+		
+		btnExcluir = new JButton("Excluir Produto");
+		btnExcluir.setEnabled(false);
+		btnExcluir.setBackground(Color.WHITE);		
+		btnExcluir.setBounds(152, 159, 125, 65);
+		contentPane.add(btnExcluir);
+		
+		btnAlterar = new JButton("Alterar Produto");
+		btnAlterar.setEnabled(false);
+		btnAlterar.setBackground(Color.WHITE);
+		btnAlterar.setBounds(17, 159, 125, 65);
+		contentPane.add(btnAlterar);
+				
+		JButton btnPesquisar = new JButton("");
+		setVisible(false);
+		btnPesquisar.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/pesquisar.PNG")));
+		btnPesquisar.setBounds(384, 55, 40, 25);
+		contentPane.add(btnPesquisar);
+		
+		JButton btnSaiP = new JButton("");	
 		btnSaiP.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/X c\u00F3pia.png")));
 		btnSaiP.setBorderPainted(false);
 		btnSaiP.setBackground(Color.LIGHT_GRAY);
 		btnSaiP.setBounds(353, 11, 19, 19);
 		painelPesquisa.add(btnSaiP);
 		
-		
-		contentPane.add(painelDepartamentos);
-		painelDepartamentos.setLayout(null);
-		
-		btnSai = new JButton("");
-		
+		btnSai = new JButton("");		
 		btnSai.setBackground(new Color(0, 206, 209));
 		btnSai.setBorderPainted(false);
 		btnSai.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/X c\u00F3pia.png")));
@@ -129,63 +135,48 @@ public class FAdmin extends JFrame {
 		btnQueijos.setBounds(27, 135, 95, 23);
 		painelDepartamentos.add(btnQueijos);
 		
-		lblDepartamentos = new JLabel("Departamentos");
-		lblDepartamentos.setFont(new Font("Microsoft YaHei Light", Font.ITALIC, 14));
-		lblDepartamentos.setBounds(6, 11, 97, 19);
-		painelDepartamentos.add(lblDepartamentos);
-		
 		btnUsuario.setBackground(Color.WHITE);
-		btnUsuario.setBorderPainted(false);
-		
-		
+		btnUsuario.setBorderPainted(false);		
 		btnUsuario.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/ima1 c\u00F3pia.png")));
 		btnUsuario.setBounds(390, 10, 34, 34);
 		contentPane.add(btnUsuario);
 		
-		
-		btnDepartamentos.setBackground(Color.WHITE);
-		btnDepartamentos.setBorderPainted(false);
-		btnDepartamentos.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/3riscos.PNG")));
-		btnDepartamentos.setBounds(17, 22, 28, 14);
-		contentPane.add(btnDepartamentos);
-		txtPesquisa.setBounds(17, 55, 368, 25);
-		contentPane.add(txtPesquisa);
-		txtPesquisa.setColumns(10);
-		
-		btnPesquisar.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/pesquisar.PNG")));
-		btnPesquisar.setBounds(384, 55, 40, 25);
-		contentPane.add(btnPesquisar);
-		
-		
-		btnAlterar.setEnabled(false);
-		btnAlterar.setBackground(Color.WHITE);
-		btnAlterar.setBounds(17, 159, 125, 65);
-		contentPane.add(btnAlterar);
-		
-		
-		btnExcluir.setEnabled(false);
-		btnExcluir.setBackground(Color.WHITE);
-		
-		btnExcluir.setBounds(152, 159, 125, 65);
-		contentPane.add(btnExcluir);
-		
-		
-		
-		btnCadastrar.setBackground(Color.WHITE);
-		btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnCadastrar.setBounds(287, 159, 125, 65);
-		contentPane.add(btnCadastrar);
-		
-		btnLogout = new JButton("");
-		
+		btnLogout = new JButton("");	
 		btnLogout.setBorderPainted(false);
 		btnLogout.setBackground(Color.WHITE);
 		btnLogout.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/power.jpg")));
 		btnLogout.setBounds(350, 13, 34, 26);
 		contentPane.add(btnLogout);
-	
-		Acao a = new Acao();
-		//Açao do botao de usuario
+		
+		
+		
+		//Campos de texto
+		txtPesquisa = new JTextField();	
+		txtPesquisa.setBounds(17, 55, 368, 25);
+		contentPane.add(txtPesquisa);
+		txtPesquisa.setColumns(10);
+		
+		
+
+		//Tabela e ScrollPane
+		table = new JTable();
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 30, 362, 138);
+		scrollPane.setViewportView(table);
+		
+		
+		
+		//Rótulos
+		lblDepartamentos = new JLabel("Departamentos");
+		lblDepartamentos.setFont(new Font("Microsoft YaHei Light", Font.ITALIC, 14));
+		lblDepartamentos.setBounds(6, 11, 97, 19);
+		painelDepartamentos.add(lblDepartamentos);
+		
+		
+		
+		//Ações dos botões
+				//Açãoo do botão de usuário
 		btnUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
@@ -195,7 +186,7 @@ public class FAdmin extends JFrame {
 			}
 		});
 				
-		//Ação do botão Pesquisar
+				//Ação do botão Pesquisar
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 								
@@ -225,7 +216,7 @@ public class FAdmin extends JFrame {
 			}
 		});
 		
-		//Botao sair da tabela de pesquisa
+				//Botão sair da tabela de pesquisa
 				btnSaiP.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						painelPesquisa.setVisible(false); 
@@ -241,7 +232,7 @@ public class FAdmin extends JFrame {
 					}
 				});
 		
-		//Ação de cadastrar
+				//Ação de cadastrar
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JCadastrar cadastra = new JCadastrar();
@@ -251,7 +242,7 @@ public class FAdmin extends JFrame {
 			}
 		});
 		
-		//Ação do botão de logout
+				//Ação do botão de logout
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			setVisible(false);
@@ -260,7 +251,7 @@ public class FAdmin extends JFrame {
 			}
 		});
 		
-		//Ação do botão de departamentos
+				//Ação do botão de departamentos
 		btnDepartamentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			btnDepartamentos.setEnabled(false);
@@ -276,7 +267,7 @@ public class FAdmin extends JFrame {
 			}
 		});
 		
-		//Ação do botão SAIR dos Departamentos
+				//Ação do botão SAIR dos Departamentos
 		btnSai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			painelDepartamentos.setVisible(false);
@@ -290,7 +281,7 @@ public class FAdmin extends JFrame {
 			}
 		});
 		
-		//Ação do botão do vinho
+				//Ação do botão vinho
 		btnVinho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			setVisible(false);
@@ -299,7 +290,7 @@ public class FAdmin extends JFrame {
 			}
 		});
 		
-		//Ação do botao queijo
+				//Ação do botao queijo
 		btnQueijos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			setVisible(false);
