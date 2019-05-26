@@ -20,9 +20,9 @@ public static void main(String[] args) {
 			at.setSenha("java");
 			a.cadastrarUsuarios(at);
 			
-						//Instanciar um objeto da classe Formulario (login) e exibi-lo
-						Formulario frame = new Formulario();
-						frame.setVisible(true);
+			//Instanciar um objeto da classe Formulario (login) e exibi-lo
+			Formulario frame = new Formulario();
+			frame.setVisible(true);
 
 	
 	}

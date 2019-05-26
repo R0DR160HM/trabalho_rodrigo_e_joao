@@ -3,11 +3,15 @@ package formulariosUsuario;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import acao.Acao;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
@@ -16,7 +20,7 @@ import java.awt.event.ActionEvent;
 public class Queijos2 extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtPesquisa;
 	private JTable table;
 
 	//Criar formulário
@@ -29,21 +33,23 @@ public class Queijos2 extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		
+		//Instanciar objeto da classe Acao
+		Acao a = new Acao();
 		
 		//Campo de texto
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(130, 59, 242, 25);
-		contentPane.add(textField);
+		txtPesquisa = new JTextField();
+		txtPesquisa.setColumns(10);
+		txtPesquisa.setBounds(130, 59, 242, 25);
+		contentPane.add(txtPesquisa);
 		
 		
 		
 		//Botões
-		JButton button = new JButton("");
-		button.setIcon(new ImageIcon(Queijos2.class.getResource("/imagens/pesquisar.PNG")));
-		button.setBounds(370, 59, 40, 25);
-		contentPane.add(button);
+		JButton btnPesquisar = new JButton("");
+		
+		btnPesquisar.setIcon(new ImageIcon(Queijos2.class.getResource("/imagens/pesquisar.PNG")));
+		btnPesquisar.setBounds(370, 59, 40, 25);
+		contentPane.add(btnPesquisar);
 		
 		JButton btnSair = new JButton("");		
 		btnSair.setIcon(new ImageIcon(Queijos2.class.getResource("/imagens/X c\u00F3pia.png")));
@@ -60,15 +66,17 @@ public class Queijos2 extends JFrame {
 		lblNewLabel.setBounds(10, 29, 100, 67);
 		contentPane.add(lblNewLabel);
 		
-		
-		
-		//Tabela e ScrollPane		
-		table = new JTable();
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 107, 414, 182);
+		contentPane.add(panel);
+		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 107, 414, 182);
+		scrollPane.setBounds(0, 0, 414, 182);
+		panel.add(scrollPane);
+		
+		table = new JTable();
 		scrollPane.setViewportView(table);
-		contentPane.add(scrollPane);
 
 		
 		//Ação do botão
@@ -80,6 +88,28 @@ public class Queijos2 extends JFrame {
 			}
 		});
 		
+		//Acao do botao Pesquisar
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if((a.validar1(txtPesquisa.getText()) == true) && (a.validar2() == true)) {
+					String text = txtPesquisa.getText();
+				
+				
+				if(a.AnalisarQueijo(text) == true) {
+					
+					table.setModel(a.tabelaQueijo(text));
+				}else {
+					JOptionPane.showMessageDialog(null, "Produto nao existe em estoque");
+				}
+			
+			
+				}
+				
+				txtPesquisa.setText("");
+				txtPesquisa.requestFocus();
+			}
+		});
 	}
 
 }

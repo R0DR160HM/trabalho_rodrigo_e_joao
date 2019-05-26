@@ -220,7 +220,7 @@ public class JCadastrar extends JFrame {
 			
 				if (rdVinho.isSelected() == true) {
 					//Pega as informacoe e adiciona ao array
-					a.cadastrarVinho(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxCor.getSelectedItem().toString(), cbxTipo.getSelectedItem().toString());				
+					a.cadastrarVinho(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxCor.getSelectedItem().toString(), cbxTipo.getSelectedItem().toString(), "Vinho");				
 					
 					//Limpa os campos
 					txtNome.setText("");
@@ -235,7 +235,7 @@ public class JCadastrar extends JFrame {
 				}else if (rdQueijo.isSelected() == true) {
 					
 					//Pega as informacoe e adiciona ao array
-					a.cadastrarQueijo(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxAnimal.getSelectedItem().toString(), cbxTex.getSelectedItem().toString());					
+					a.cadastrarQueijo(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxAnimal.getSelectedItem().toString(), cbxTex.getSelectedItem().toString(), "Queijo");					
 					
 					//Limpa os campos
 

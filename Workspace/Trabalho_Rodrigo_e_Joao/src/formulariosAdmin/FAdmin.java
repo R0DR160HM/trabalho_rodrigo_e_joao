@@ -42,7 +42,7 @@ public class FAdmin extends JFrame {
 	//Criar formulário
 	public FAdmin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 309);
+		setBounds(100, 100, 451, 309);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -53,15 +53,19 @@ public class FAdmin extends JFrame {
 		
 		//Painéis
 		JPanel painelDepartamentos = new JPanel();
+		scrollPane = new JScrollPane();
+		painelPesquisa = new JPanel();
+		
+		
 		painelDepartamentos.setBackground(new Color(0, 206, 209));
 		painelDepartamentos.setBounds(0, 0, 142, 270);
 		painelDepartamentos.setVisible(false);
 		painelDepartamentos.setLayout(null);
 		contentPane.add(painelDepartamentos);
 		
-		painelPesquisa = new JPanel();
+		
 		painelPesquisa.setBackground(Color.LIGHT_GRAY);
-		painelPesquisa.setBounds(17, 80, 382, 179);
+		painelPesquisa.setBounds(0, 80, 434, 179);
 		painelPesquisa.add(scrollPane);
 		painelPesquisa.setVisible(false);
 		painelPesquisa.setLayout(null);
@@ -75,60 +79,77 @@ public class FAdmin extends JFrame {
 		
 		//Botões
 		JButton btnUsuario = new JButton("");
-		
+		btnCadastrar = new JButton("Cadastrar Produto");
+		btnExcluir = new JButton("Excluir Produto");
 		btnDepartamentos = new JButton("");
+		btnAlterar = new JButton("Alterar Produto");
+		JButton btnPesquisar = new JButton("");
+		JButton btnSaiP = new JButton("");
+		btnSai = new JButton("");
+		btnVinho = new JButton("Vinhos");
+		btnQueijos = new JButton("Queijos");
+		btnLogout = new JButton("");
+		
+		
+		
+		
+		
+		
+		
+		
+		//Design
 		btnDepartamentos.setBackground(Color.WHITE);
 		btnDepartamentos.setBorderPainted(false);
 		btnDepartamentos.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/3riscos.PNG")));
 		btnDepartamentos.setBounds(17, 22, 28, 14);
 		contentPane.add(btnDepartamentos);
 				
-		btnCadastrar = new JButton("Cadastrar Produto");
+		
 		btnCadastrar.setBackground(Color.WHITE);
 		btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnCadastrar.setBounds(287, 159, 125, 65);
 		contentPane.add(btnCadastrar);
 		
-		btnExcluir = new JButton("Excluir Produto");
+		
 		btnExcluir.setEnabled(false);
 		btnExcluir.setBackground(Color.WHITE);		
 		btnExcluir.setBounds(152, 159, 125, 65);
 		contentPane.add(btnExcluir);
 		
-		btnAlterar = new JButton("Alterar Produto");
+		
 		btnAlterar.setEnabled(false);
 		btnAlterar.setBackground(Color.WHITE);
 		btnAlterar.setBounds(17, 159, 125, 65);
 		contentPane.add(btnAlterar);
 				
-		JButton btnPesquisar = new JButton("");
+		
 		setVisible(false);
 		btnPesquisar.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/pesquisar.PNG")));
 		btnPesquisar.setBounds(384, 55, 40, 25);
 		contentPane.add(btnPesquisar);
 		
-		JButton btnSaiP = new JButton("");	
+			
 		btnSaiP.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/X c\u00F3pia.png")));
 		btnSaiP.setBorderPainted(false);
 		btnSaiP.setBackground(Color.LIGHT_GRAY);
-		btnSaiP.setBounds(353, 11, 19, 19);
+		btnSaiP.setBounds(405, 11, 19, 19);
 		painelPesquisa.add(btnSaiP);
 		
-		btnSai = new JButton("");		
+				
 		btnSai.setBackground(new Color(0, 206, 209));
 		btnSai.setBorderPainted(false);
 		btnSai.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/X c\u00F3pia.png")));
 		btnSai.setBounds(113, 11, 19, 19);
 		painelDepartamentos.add(btnSai);
 		
-		btnVinho = new JButton("Vinhos");
+		
 		btnVinho.setFont(new Font("Calibri Light", Font.PLAIN, 20));
 		btnVinho.setBackground(new Color(0, 206, 209));
 		btnVinho.setBorderPainted(false);
 		btnVinho.setBounds(27, 73, 89, 23);
 		painelDepartamentos.add(btnVinho);
 		
-		btnQueijos = new JButton("Queijos");
+		
 		btnQueijos.setFont(new Font("Calibri Light", Font.PLAIN, 20));
 		btnQueijos.setBackground(new Color(0, 206, 209));
 		btnQueijos.setBorderPainted(false);
@@ -141,7 +162,7 @@ public class FAdmin extends JFrame {
 		btnUsuario.setBounds(390, 10, 34, 34);
 		contentPane.add(btnUsuario);
 		
-		btnLogout = new JButton("");	
+			
 		btnLogout.setBorderPainted(false);
 		btnLogout.setBackground(Color.WHITE);
 		btnLogout.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/power.jpg")));
@@ -159,10 +180,8 @@ public class FAdmin extends JFrame {
 		
 
 		//Tabela e ScrollPane
-		table = new JTable();
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 30, 362, 138);
+		table = new JTable();		
+		scrollPane.setBounds(10, 30, 414, 138);
 		scrollPane.setViewportView(table);
 		
 		
@@ -175,8 +194,10 @@ public class FAdmin extends JFrame {
 		
 		
 		
-		//Ações dos botões
-				//Açãoo do botão de usuário
+		//------Ações dos botões-------
+		
+		
+		//Ação do botão de usuário
 		btnUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
@@ -186,7 +207,7 @@ public class FAdmin extends JFrame {
 			}
 		});
 				
-				//Ação do botão Pesquisar
+		//Ação do botão Pesquisar
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 								

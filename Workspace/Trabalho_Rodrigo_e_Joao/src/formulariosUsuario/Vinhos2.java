@@ -3,7 +3,11 @@ package formulariosUsuario;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import acao.Acao;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -11,11 +15,13 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTable;
 
 public class Vinhos2 extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtPesquisa;
+	private JTable table;
 
 	//Criar formulário
 	public Vinhos2() {
@@ -27,7 +33,8 @@ public class Vinhos2 extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		
+		//Instanciar objeto da classe Acao
+		Acao a = new Acao();
 		
 		//Rótulo
 		JLabel lblNewLabel = new JLabel("");
@@ -35,23 +42,21 @@ public class Vinhos2 extends JFrame {
 		lblNewLabel.setBounds(9, 1, 101, 130);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		
 		
 		
 		//Campo de texto
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(127, 57, 242, 25);
-		contentPane.add(textField);
+		txtPesquisa = new JTextField();
+		txtPesquisa.setColumns(10);
+		txtPesquisa.setBounds(134, 57, 242, 25);
+		contentPane.add(txtPesquisa);
 		
 		
 		
 		//Botões
-		JButton button = new JButton("");
-		button.setIcon(new ImageIcon(Vinhos2.class.getResource("/imagens/pesquisar.PNG")));
-		button.setBounds(367, 57, 40, 25);
-		contentPane.add(button);
+		JButton btnPesquisar = new JButton("");
+				btnPesquisar.setIcon(new ImageIcon(Vinhos2.class.getResource("/imagens/pesquisar.PNG")));
+		btnPesquisar.setBounds(375, 57, 40, 25);
+		contentPane.add(btnPesquisar);
 		
 		JButton btnSair = new JButton("");		
 		btnSair.setIcon(new ImageIcon(Vinhos2.class.getResource("/imagens/X c\u00F3pia.png")));
@@ -60,13 +65,17 @@ public class Vinhos2 extends JFrame {
 		btnSair.setBounds(405, 11, 19, 19);
 		contentPane.add(btnSair);
 		
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 136, 414, 173);
+		contentPane.add(panel);
+		panel.setLayout(null);
 		
-		
-		//ScrollPane
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(9, 129, 415, 178);
-		scrollPane.setViewportView(lblNewLabel_1);
-		contentPane.add(scrollPane);
+		scrollPane.setBounds(0, 0, 414, 173);
+		panel.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		
 
 		
@@ -80,5 +89,29 @@ public class Vinhos2 extends JFrame {
 			frame.setVisible(true);
 			}
 		});
+		
+		//Acao do botao Pesquisar
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				if((a.validar1(txtPesquisa.getText()) == true) && (a.validar2() == true)) {
+					String text = txtPesquisa.getText();
+				
+				
+				if(a.AnalisarVinho(text) == true) {
+					table.setModel(a.tabelaVinho(text));
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Produto nao existe em estoque");
+				}
+			
+			
+				}
+				
+				txtPesquisa.setText("");
+				txtPesquisa.requestFocus();
+			}
+		});
+
 	}
 }

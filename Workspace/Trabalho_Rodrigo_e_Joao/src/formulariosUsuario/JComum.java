@@ -66,13 +66,6 @@ public class JComum extends JFrame {
 		painelCarrinho.setLayout(null);
 		panel.add(painelCarrinho);
 		
-		JPanel painelPesquisa = new JPanel();
-		painelPesquisa.setBackground(Color.LIGHT_GRAY);
-		painelPesquisa.setBounds(37, 89, 366, 104);
-		painelPesquisa.setVisible(false);
-		painelPesquisa.setLayout(null);
-		panel.add(painelPesquisa);
-		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(445, 0, -83, 235);
 		panel.add(panel_1);
@@ -121,13 +114,6 @@ public class JComum extends JFrame {
 		btnPesquisar.setIcon(new ImageIcon(JComum.class.getResource("/imagens/pesquisar.PNG")));
 		panel.add(btnPesquisar);
 		
-		JButton btnSaiP = new JButton("");
-		btnSaiP.setIcon(new ImageIcon(JComum.class.getResource("/imagens/X c\u00F3pia.png")));
-		btnSaiP.setBorderPainted(false);
-		btnSaiP.setBackground(Color.LIGHT_GRAY);
-		btnSaiP.setBounds(338, 4, 19, 19);
-		painelPesquisa.add(btnSaiP);
-		
 		JButton btnSai2 = new JButton("");		
 		btnSai2.setIcon(new ImageIcon(JComum.class.getResource("/imagens/X c\u00F3pia.png")));
 		btnSai2.setBorderPainted(false);
@@ -156,17 +142,7 @@ public class JComum extends JFrame {
 		btnQueijos.setBounds(27, 139, 95, 23);
 		painelDepartamentos.add(btnQueijos);
 		
-		
-
-		//Tabelas e ScrollPanes
-		table = new JTable();
-		
 		table_1 = new JTable();
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 24, 346, 69);
-		painelPesquisa.add(scrollPane);
-		scrollPane.setViewportView(table);
 		
 		JScrollPane tableCarrinho = new JScrollPane();
 		tableCarrinho.setBounds(10, 41, 193, 141);
@@ -193,6 +169,45 @@ public class JComum extends JFrame {
 		txtPesquisa.setBounds(37, 64, 368, 25);
 		txtPesquisa.setColumns(10);
 		panel.add(txtPesquisa);
+		
+		JPanel painelPesquisa = new JPanel();
+		painelPesquisa.setBackground(Color.LIGHT_GRAY);
+		painelPesquisa.setBounds(10, 89, 435, 104);
+		painelPesquisa.setVisible(false);
+		painelPesquisa.setLayout(null);
+		panel.add(painelPesquisa);
+		
+		JButton btnSaiP = new JButton("");
+		btnSaiP.setIcon(new ImageIcon(JComum.class.getResource("/imagens/X c\u00F3pia.png")));
+		btnSaiP.setBorderPainted(false);
+		btnSaiP.setBackground(Color.LIGHT_GRAY);
+		btnSaiP.setBounds(408, 4, 19, 19);
+		painelPesquisa.add(btnSaiP);
+		
+		
+
+		//Tabelas e ScrollPanes
+		table = new JTable();
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 24, 415, 69);
+		painelPesquisa.add(scrollPane);
+		scrollPane.setViewportView(table);
+		
+				//Botão para sair da tabela de pesquisa
+		btnSaiP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painelPesquisa.setVisible(false); 
+				btnDepartamentos.setEnabled(true);
+				btnDepartamentos.setVisible(true);				
+				btnUsuario.setEnabled(true);				
+				btnPesquisar.setEnabled(true);				
+				btnLogout.setEnabled(true);
+				txtPesquisa.setEnabled(true);
+				txtPesquisa.setText("");
+				txtPesquisa.requestFocus();
+			}
+		});
 		
 
 		
@@ -288,21 +303,6 @@ public class JComum extends JFrame {
 					}
 				}
 			
-				txtPesquisa.setText("");
-				txtPesquisa.requestFocus();
-			}
-		});
-		
-				//Botão para sair da tabela de pesquisa
-		btnSaiP.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				painelPesquisa.setVisible(false); 
-				btnDepartamentos.setEnabled(true);
-				btnDepartamentos.setVisible(true);				
-				btnUsuario.setEnabled(true);				
-				btnPesquisar.setEnabled(true);				
-				btnLogout.setEnabled(true);
-				txtPesquisa.setEnabled(true);
 				txtPesquisa.setText("");
 				txtPesquisa.requestFocus();
 			}

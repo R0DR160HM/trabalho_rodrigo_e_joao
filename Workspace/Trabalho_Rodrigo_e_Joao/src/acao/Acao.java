@@ -24,11 +24,11 @@ public class Acao {
 	
 	
 	//Cadastrar vinhos
-	public void cadastrarVinho(String nome, String pais, String marca, double valor, String cor, String tipo) {
+	public void cadastrarVinho(String nome, String pais, String marca, double valor, String cor, String tipo, String TipoProduto) {
 		
 		try {
 			
-		Vinho v = new Vinho(nome, pais, marca, valor, cor, tipo);
+		Vinho v = new Vinho(nome, pais, marca, valor, cor, tipo, TipoProduto);
 		Vetor.vetorVinho.add(v);
 		JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
 		
@@ -44,11 +44,11 @@ public class Acao {
 	
 	
 	//Cadastrar queijos
-	public void cadastrarQueijo(String nome, String pais, String marca, double valor, String animal, String textura) {
+	public void cadastrarQueijo(String nome, String pais, String marca, double valor, String animal, String textura, String tipoProduto) {
 		
 		try {
 			
-		Queijo q = new Queijo(nome, pais, marca, valor, animal, textura);
+		Queijo q = new Queijo(nome, pais, marca, valor, animal, textura, tipoProduto);
 		Vetor.vetorQueijo.add(q);
 		JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
 		
@@ -126,16 +126,24 @@ public class Acao {
 		dadosTabela.addColumn("Marca");
 		dadosTabela.addColumn("Origem");
 		dadosTabela.addColumn("Valor");
+		dadosTabela.addColumn("Cor/Animal");
+		dadosTabela.addColumn("Tipo/Textura");
+		dadosTabela.addColumn("Produto");
 		
 		for(int i=0; i<Vetor.vetorVinho.size(); i++) {
 			
+			
+			
 			if(Vetor.vetorVinho.get(i).getNome().startsWith(pesquisa)) {
-			dadosTabela.addRow(new Object[] {Vetor.vetorVinho.get(i).getNome(), Vetor.vetorVinho.get(i).getMarca(), Vetor.vetorVinho.get(i).getPais(), Vetor.vetorVinho.get(i).getValor()});
+			dadosTabela.addRow(new Object[] {Vetor.vetorVinho.get(i).getNome(), Vetor.vetorVinho.get(i).getMarca(), Vetor.vetorVinho.get(i).getPais(), Vetor.vetorVinho.get(i).getValor(), Vetor.vetorVinho.get(i).getCor(), Vetor.vetorVinho.get(i).getTipo(), Vetor.vetorVinho.get(i).getTProduto()});
 			}
 			
-			if(Vetor.vetorQueijo.get(i).getNome().startsWith(pesquisa)) {
-				dadosTabela.addRow(new Object[] {Vetor.vetorQueijo.get(i).getNome(), Vetor.vetorQueijo.get(i).getMarca(), Vetor.vetorQueijo.get(i).getPais(), Vetor.vetorQueijo.get(i).getValor()});
+		}
+			for(int i2=0; i2<Vetor.vetorQueijo.size(); i2++) {
+			if(Vetor.vetorQueijo.get(i2).getNome().startsWith(pesquisa)) {
+				dadosTabela.addRow(new Object[] {Vetor.vetorQueijo.get(i2).getNome(), Vetor.vetorQueijo.get(i2).getMarca(), Vetor.vetorQueijo.get(i2).getPais(), Vetor.vetorQueijo.get(i2).getValor(), Vetor.vetorQueijo.get(i2).getAnimal(), Vetor.vetorQueijo.get(i2).getTextura(), Vetor.vetorQueijo.get(i2).getTProduto()});
 				}
+			
 			
 		}
 			
@@ -198,6 +206,73 @@ public class Acao {
 		return valida;
 	}
 	
+	//Tabela de pesquisa do departamento de vinho
+	public DefaultTableModel tabelaVinho(String pesquisa) {
+		DefaultTableModel dadosTabela = new DefaultTableModel();
+		dadosTabela.addColumn("Nome");
+		dadosTabela.addColumn("Marca");
+		dadosTabela.addColumn("Origem");
+		dadosTabela.addColumn("Valor");
+		dadosTabela.addColumn("Tipo");
+		dadosTabela.addColumn("Cor");
+		
+		for(int i=0; i<Vetor.vetorVinho.size(); i++) {
+			
+			if(Vetor.vetorVinho.get(i).getNome().startsWith(pesquisa)) {
+				dadosTabela.addRow(new Object[] {Vetor.vetorVinho.get(i).getNome(), Vetor.vetorVinho.get(i).getMarca(), Vetor.vetorVinho.get(i).getPais(), Vetor.vetorVinho.get(i).getValor(), Vetor.vetorVinho.get(i).getCor(), Vetor.vetorVinho.get(i).getTipo()});
+			}
+			
+		}
+		return dadosTabela;
+	}
+	
+	//Analisar o vinho
+	public boolean AnalisarVinho(String pesquisa) {
+		
+		boolean valida = false;
+		
+		for(int i=0; i<Vetor.vetorVinho.size(); i++) {
+		
+			if(Vetor.vetorVinho.get(i).getNome().startsWith(pesquisa)) {
+				valida = true;
+			}
+			
+		}	
+		return valida;
+	}
 	
 	
+	//Tabela de pesquisa do departamento de queijo
+		public DefaultTableModel tabelaQueijo(String pesquisa) {
+			DefaultTableModel dadosTabela = new DefaultTableModel();
+			dadosTabela.addColumn("Nome");
+			dadosTabela.addColumn("Marca");
+			dadosTabela.addColumn("Origem");
+			dadosTabela.addColumn("Valor");
+			dadosTabela.addColumn("Animal");
+			dadosTabela.addColumn("Textura");
+			
+			for(int i=0; i<Vetor.vetorQueijo.size(); i++) {
+				
+				if(Vetor.vetorQueijo.get(i).getNome().startsWith(pesquisa)) {
+					dadosTabela.addRow(new Object[] {Vetor.vetorQueijo.get(i).getNome(), Vetor.vetorQueijo.get(i).getMarca(), Vetor.vetorQueijo.get(i).getPais(), Vetor.vetorQueijo.get(i).getValor(), Vetor.vetorQueijo.get(i).getAnimal(), Vetor.vetorQueijo.get(i).getTextura()});
+				}
+				
+			}
+			return dadosTabela;
+		}
+	//Analisar tabela Queijo
+	public boolean AnalisarQueijo(String pesquisa) {
+			
+			boolean valida = false;
+			
+			for(int i=0; i<Vetor.vetorQueijo.size(); i++) {
+			
+				if(Vetor.vetorQueijo.get(i).getNome().startsWith(pesquisa)) {
+					valida = true;
+				}
+				
+			}	
+			return valida;
+		}
 }
