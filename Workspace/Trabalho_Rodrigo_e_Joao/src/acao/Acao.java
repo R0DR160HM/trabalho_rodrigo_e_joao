@@ -275,4 +275,20 @@ public class Acao {
 			}	
 			return valida;
 		}
+	
+	//Exluir
+	public void Excluir(String nome) {
+		for (int i=0; i<Vetor.vetorQueijo.size(); i++) {						
+			if (Vetor.vetorQueijo.get(i).getNome().equals(nome)) {
+				Vetor.vetorQueijo.remove(i);
+			}						
+		}
+		
+		for (int i=0; i<Vetor.vetorVinho.size(); i++) {
+			if (Vetor.vetorVinho.get(i).getNome().equals(nome)) {
+				Vetor.vetorVinho.remove(i);
+			}	
+			
+		}
+	}
 }

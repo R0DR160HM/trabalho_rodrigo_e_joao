@@ -45,8 +45,7 @@ public class Queijos extends JFrame {
 		
 		
 		//Botões
-		JButton btnPesquisar = new JButton("");
-		
+		JButton btnPesquisar = new JButton("");		
 		btnPesquisar.setIcon(new ImageIcon(Queijos.class.getResource("/imagens/pesquisar.PNG")));
 		btnPesquisar.setBounds(370, 59, 40, 25);
 		contentPane.add(btnPesquisar);
@@ -66,11 +65,17 @@ public class Queijos extends JFrame {
 		lblNewLabel.setBounds(10, 29, 100, 67);
 		contentPane.add(lblNewLabel);
 		
+		
+		
+		//Painel
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 107, 414, 182);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		
+		
+		//Tabela e ScrollPane
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 414, 182);
 		panel.add(scrollPane);
@@ -111,6 +116,8 @@ public class Queijos extends JFrame {
 				txtPesquisa.requestFocus();
 			}
 		});
+		
+		
 		
 	}
 

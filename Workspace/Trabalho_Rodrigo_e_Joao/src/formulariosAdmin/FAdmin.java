@@ -3,6 +3,8 @@ package formulariosAdmin;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -11,11 +13,16 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 
 import acao.Acao;
+import dados.Vetor;
 import formulario.AlterarDados;
 import formulario.Formulario;
+import produtos.Queijo;
+import produtos.Vinho;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JScrollPane;
@@ -79,15 +86,25 @@ public class FAdmin extends JFrame {
 		
 		//Botões
 		JButton btnUsuario = new JButton("");
+		
 		btnCadastrar = new JButton("Cadastrar Produto");
+		
 		btnExcluir = new JButton("Excluir Produto");
+		
 		btnDepartamentos = new JButton("");
+		
 		btnAlterar = new JButton("Alterar Produto");
+		
 		JButton btnPesquisar = new JButton("");
+		
 		JButton btnSaiP = new JButton("");
+		
 		btnSai = new JButton("");
+		
 		btnVinho = new JButton("Vinhos");
+		
 		btnQueijos = new JButton("Queijos");
+		
 		btnLogout = new JButton("");
 		
 		
@@ -180,7 +197,7 @@ public class FAdmin extends JFrame {
 		
 
 		//Tabela e ScrollPane
-		table = new JTable();		
+		table = new JTable();
 		scrollPane.setBounds(10, 30, 414, 138);
 		scrollPane.setViewportView(table);
 		
@@ -192,9 +209,36 @@ public class FAdmin extends JFrame {
 		lblDepartamentos.setBounds(6, 11, 97, 19);
 		painelDepartamentos.add(lblDepartamentos);
 		
+		JLabel indice = new JLabel("");
+		indice.setBounds(229, 11, 48, 14);
+		indice.setVisible(false);
+		contentPane.add(indice);
+		
+
 		
 		
-		//------Ações dos botões-------
+		
+		//------Ações dos botões e da tabela-------
+		
+		
+		
+		//Ação da tabela
+		table.addMouseListener(new MouseAdapter() {
+			
+			public void mouseReleased(MouseEvent e) {
+				
+				//Obter o índice
+				indice.setText(String.valueOf(table.getSelectedRow()));
+				
+				//Habilitar botões
+				painelPesquisa.setVisible(false);
+				btnCadastrar.setEnabled(false);
+				btnAlterar.setEnabled(true);
+				btnExcluir.setEnabled(true);
+				
+			}
+			
+		});
 		
 		
 		//Ação do botão de usuário
@@ -317,6 +361,177 @@ public class FAdmin extends JFrame {
 			setVisible(false);
 			Queijos frame = new Queijos();
 			frame.setVisible(true);
+			}
+		});
+		
+			//Ação do botão excluir
+		btnExcluir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String nome = table.getValueAt(Integer.parseInt(indice.getText()), 0).toString();
+				int excluir = JOptionPane.showConfirmDialog(null, "Deseja excluir o produto"+nome+"?");
+				if (excluir == 0) {
+					
+					a.Excluir(nome);
+					
+					JOptionPane.showMessageDialog(null, nome+" excluido com sucesso!");
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Exclusão cancelada");
+				}
+				
+				btnAlterar.setEnabled(false);
+				btnExcluir.setEnabled(false);
+				btnCadastrar.setEnabled(true);
+				btnDepartamentos.setEnabled(true);
+				btnDepartamentos.setVisible(true);
+				btnCadastrar.setEnabled(true);
+				btnUsuario.setEnabled(true);
+				btnAlterar.setEnabled(true);
+				btnPesquisar.setEnabled(true);
+				btnExcluir.setEnabled(true);
+				btnLogout.setEnabled(true);
+				txtPesquisa.setEnabled(true);
+				
+			}
+		});
+		
+				//Botão de alterar
+		btnAlterar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int index = Integer.parseInt(indice.getText());
+				String nome = table.getValueAt(index, 0).toString();
+				int confirm = JOptionPane.showConfirmDialog(null, "Deseja alterar as informações de "+nome+"?");
+				if (confirm == 0) {
+					
+					if (a.AnalisarVinho(nome) == true) {
+						
+						
+					String novonome = JOptionPane.showInputDialog("Insira o novo nome\nAtaul "+nome+"\nDeixe o campo em branco para manter o padrão atual");
+					if (novonome.equals("")) {
+						novonome = nome;
+					}
+					
+					String marca = JOptionPane.showInputDialog("Insira a nova marca\nAtual: "+Vetor.vetorVinho.get(index).getMarca()+"\nDeixe o campo em brancom para manter o padrão atual");
+					if (marca.equals("")) {
+						marca = Vetor.vetorVinho.get(index).getMarca();
+					}
+					
+					String origem = JOptionPane.showInputDialog("Insira o novo país de origem\nAtual: "+Vetor.vetorVinho.get(index).getPais()+"\nDeixe o campo em brancom para manter o padrão atual");
+					if (origem.equals("")) {
+						origem = Vetor.vetorVinho.get(index).getMarca();
+					}
+						
+					String valor = JOptionPane.showInputDialog("Insira o novo valor\nAtual: "+Vetor.vetorVinho.get(index).getValor()+"\nDeixe o campo em brancom para manter o padrão atual");
+					if (valor.equals("")) {
+						valor = ""+Vetor.vetorVinho.get(index).getValor();
+					}
+					
+					Object[] tipo = {"Seco", "Suave"};
+					String novotipo = "";
+					int tipoint = JOptionPane.showOptionDialog(null, "Escolha o novo tipo\nAtual: "+Vetor.vetorVinho.get(index).getTipo(), "", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, tipo, 0);
+					if (tipoint == 0) {
+						novotipo = "Seco";
+					}else if (tipoint == 1) {
+						novotipo = "Suave";
+					}
+					
+					Object[] cor = {"Branco", "Tinto"};
+					String novacor = "";
+					int corint = JOptionPane.showOptionDialog(null, "Escolha a nova cor\nAtual: "+Vetor.vetorVinho.get(index).getCor(), "", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, cor, 0);
+					if (corint == 0) {
+						novacor = "Branco";
+					}else if (corint == 1) {
+						novacor = "Tinto";
+					}
+					
+					Vinho v = new Vinho(novonome, origem, marca, Double.parseDouble(valor), novacor, novotipo, "Vinho");
+					Vetor.vetorVinho.set(index, v);
+					
+						
+					}
+					
+					if (a.AnalisarQueijo(nome) == true) {
+						
+						
+						
+						String novonome = JOptionPane.showInputDialog("Insira o novo nome\nAtaul "+nome+"\nDeixe o campo em branco para manter o padrão atual");
+						if (novonome.equals("")) {
+							novonome = nome;
+						}
+						
+						String marca = JOptionPane.showInputDialog("Insira a nova marca\nAtual: "+Vetor.vetorQueijo.get(index).getMarca()+"\nDeixe o campo em brancom para manter o padrão atual");
+						if (marca.equals("")) {
+							marca = Vetor.vetorQueijo.get(index).getMarca();
+						}
+						
+						String origem = JOptionPane.showInputDialog("Insira o novo país de origem\nAtual: "+Vetor.vetorQueijo.get(index).getPais()+"\nDeixe o campo em brancom para manter o padrão atual");
+						if (origem.equals("")) {
+							origem = Vetor.vetorQueijo.get(index).getMarca();
+						}
+							
+						String valor = JOptionPane.showInputDialog("Insira o novo valor\nAtual: "+Vetor.vetorQueijo.get(index).getValor()+"\nDeixe o campo em brancom para manter o padrão atual");
+						if (valor.equals("")) {
+							valor = ""+Vetor.vetorQueijo.get(index).getValor();
+						}
+						
+						Object[] animal = {"Vaca", "Ovelha", "Cabra", "Búfala"};
+						String novoanimal = "";
+						int animalint = JOptionPane.showOptionDialog(null, "Escolha o novo animal de origem\nAtual: "+Vetor.vetorQueijo.get(index).getAnimal(), "", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, animal, 0);
+						if (animalint == 0) {
+							novoanimal = "Vaca";
+						}else if (animalint == 1) {
+							novoanimal = "Ovelha";
+						}else if (animalint == 2) {
+							novoanimal = "Cabra";
+						}else if (animalint == 3) {
+							novoanimal = "Búfala";
+						}
+						
+						Object[] textura = {"Macio", "Semimacio", "Semifirme", "Firme"};
+						String novatextura = "";
+						int textint = JOptionPane.showOptionDialog(null, "Escolha a nova textura\nAtual: "+Vetor.vetorQueijo.get(index).getTextura(), "", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, textura, 0);
+						if (textint == 0) {
+							novatextura = "Macio";
+						}else if (textint == 1) {
+							novatextura = "Semimacio";
+						}else if (textint == 2) {
+							novatextura = "Semifirme";
+						}else if (textint == 3) {
+							novatextura = "Firme";
+						}
+						
+						Queijo q = new Queijo(novonome, origem, marca, Double.parseDouble(valor), novoanimal, novatextura, "Queijo");
+						Vetor.vetorQueijo.set(index, q);	
+							
+						
+						
+					}
+					
+					JOptionPane.showMessageDialog(null, "Alteração realizada com sucesso! ");
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Alteração cancelada!");
+				}
+				
+				btnExcluir.setEnabled(false);
+				btnAlterar.setEnabled(false);
+				btnCadastrar.setEnabled(true);
+				btnDepartamentos.setEnabled(true);
+				btnDepartamentos.setVisible(true);
+				btnCadastrar.setEnabled(true);
+				btnUsuario.setEnabled(true);
+				btnAlterar.setEnabled(true);
+				btnPesquisar.setEnabled(true);
+				btnExcluir.setEnabled(true);
+				btnLogout.setEnabled(true);
+				txtPesquisa.setEnabled(true);
+				
 			}
 		});
 	}
