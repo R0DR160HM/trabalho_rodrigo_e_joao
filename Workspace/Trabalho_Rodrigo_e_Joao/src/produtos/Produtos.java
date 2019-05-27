@@ -3,16 +3,17 @@ package produtos;
 public class Produtos {
 	
 	//Atributos genéricos
-	private String nome, pais, marca;
+	private String nome, pais, marca, tipoProduto;
 	private double valor;
 	
 	//Construtor
-	public Produtos(String nome, String pais, String marca, double valor) {
+	public Produtos(String nome, String pais, String marca, double valor, String tipoProduto) {
 		
 		this.nome = nome;
 		this.pais = pais;
 		this.marca = marca;
 		this.valor = valor;
+		this.tipoProduto = tipoProduto;
 		
 	}
 	
@@ -40,6 +41,13 @@ public class Produtos {
 	}
 	public void setValor(double valor) {
 		this.valor = valor;
+	}
+	public String getTipoProduto() {
+		return tipoProduto;
+	}
+
+	public void setTipoProduto(String tipoProduto) {
+		this.tipoProduto = tipoProduto;
 	}
 	
 	

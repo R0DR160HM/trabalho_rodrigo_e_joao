@@ -4,7 +4,7 @@ public class Atributos {
 	
 	
 	//Atributos do Usuário
-	private String senha, email, data, hora;
+	private String senha, email, data, hora, nascimento;
 	private boolean admin;
 
 	//Setters & Getters
@@ -37,6 +37,12 @@ public class Atributos {
 	}
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
+	}
+	public String getNascimento() {
+		return nascimento;
+	}
+	public void setNascimento(String nascimento) {
+		this.nascimento = nascimento;
 	}
 	
 

@@ -3,14 +3,14 @@ package produtos;
 public class Queijo extends Produtos{
 	
 	//Atributos específicos
-	private String animal, textura, TProduto;
+	private String animal, textura;
 	
 	//Construtor
-	public Queijo(String nome, String pais, String marca, double valor, String animal, String textura, String TProduto) {
-		super (nome, pais, marca, valor);
+	public Queijo(String nome, String pais, String marca, double valor, String animal, String textura, String tipoProduto) {
+		super (nome, pais, marca, valor, tipoProduto);
 		this.animal = animal;
 		this.textura = textura;
-		this.TProduto = TProduto;
+		
 	}
 	
 	
@@ -29,12 +29,5 @@ public class Queijo extends Produtos{
 		this.textura = textura;
 	}
 	
-	public String getTProduto() {
-		return TProduto;
-	}
-
-	public void setTProduto(String tProduto) {
-		TProduto = tProduto;
-	}
 
 }

@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import acao.Acao;
+import beans.Carrinho;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -15,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class Queijos2 extends JFrame {
@@ -33,14 +36,26 @@ public class Queijos2 extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		
+		
 		//Instanciar objeto da classe Acao
 		Acao a = new Acao();
+		
+		
 		
 		//Campo de texto
 		txtPesquisa = new JTextField();
 		txtPesquisa.setColumns(10);
 		txtPesquisa.setBounds(130, 59, 242, 25);
 		contentPane.add(txtPesquisa);
+		
+		
+		
+		//Panel
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 107, 414, 182);
+		contentPane.add(panel);
+		panel.setLayout(null);
 		
 		
 		
@@ -66,20 +81,25 @@ public class Queijos2 extends JFrame {
 		lblNewLabel.setBounds(10, 29, 100, 67);
 		contentPane.add(lblNewLabel);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 107, 414, 182);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		JLabel indice = new JLabel("");
+		indice.setBounds(158, 11, 48, 14);
+		contentPane.add(indice);
+		indice.setVisible(false);
 		
+		
+		
+		//Tabela e ScrollPane
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 414, 182);
 		panel.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
-
 		
-		//Ação do botão
+		
+		
+		
+		//Ação do botão sair
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			setVisible(false);
@@ -110,6 +130,64 @@ public class Queijos2 extends JFrame {
 				txtPesquisa.requestFocus();
 			}
 		});
-	}
+	
+	//Ação da tabela para comprar
+	table.addMouseListener(new MouseAdapter() {
+				
+		public void mouseReleased(MouseEvent e) {
+					
+		//Obter o índice
+		indice.setText(String.valueOf(table.getSelectedRow()));
+					
+		//Habilitar botões
 
+		
+		//Pegar o nome
+		String nome = table.getValueAt(Integer.parseInt(indice.getText()), 0).toString();
+		Double valor1 = ((Double.parseDouble(table.getValueAt(Integer.parseInt(indice.getText()), 3).toString())));
+		
+		int comprar = JOptionPane.showConfirmDialog(null, "Deseja comprar o produto "+nome+"no valor de R$"+valor1+" ?");
+		
+		switch(comprar) {
+		
+		case 0:
+			int qtd = Integer.parseInt(JOptionPane.showInputDialog("Informe a quantidade a ser comprada do produto "+nome));
+			
+			
+			JOptionPane.showMessageDialog(null, "Produto adicionado ao carrinho");
+							
+			btnPesquisar.setEnabled(true);				
+			
+			txtPesquisa.setEnabled(true);
+			txtPesquisa.setText("");
+			txtPesquisa.requestFocus();
+			
+			Carrinho b = new Carrinho();
+			b.setNome(nome);
+			b.setQtd(qtd);
+			b.setValorUn(Double.parseDouble(table.getValueAt(Integer.parseInt(indice.getText()), 3).toString()));
+			b.setProduto("Queijo");
+													
+			Double qtdF = valor1* qtd;				
+							
+			JComum.valor=a.total(qtdF);
+			a.adicionarCarrinho(b);		
+		break;
+		
+		
+		case 1:
+			JOptionPane.showMessageDialog(null, "Compra cancelada");				
+			btnPesquisar.setEnabled(true);				
+			txtPesquisa.setEnabled(true);
+			txtPesquisa.setText("");
+			txtPesquisa.requestFocus();
+			break;	
+		}
+					
+	}
+				
+});
+	
+}
+	
 }

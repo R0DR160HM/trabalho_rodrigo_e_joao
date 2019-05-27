@@ -3,16 +3,16 @@ package produtos;
 public class Vinho extends Produtos{
 
 	//Atributos específicos
-	private String cor, tipo, TProduto;
+	private String cor, tipo;
 	
 	
 	//Construtor
-	public Vinho(String nome, String pais, String marca, double valor, String cor, String tipo, String TProduto) {
-		super(nome, pais, marca, valor);
+	public Vinho(String nome, String pais, String marca, double valor, String cor, String tipo, String tipoProduto) {
+		super(nome, pais, marca, valor, tipoProduto);
 		
 		this.cor = cor;
 		this.tipo = tipo;
-		this.TProduto = TProduto;
+
 	}
 
 
@@ -36,15 +36,6 @@ public class Vinho extends Produtos{
 		this.tipo = tipo;
 	}
 
-
-	public String getTProduto() {
-		return TProduto;
-	}
-
-
-	public void setTProduto(String tProduto) {
-		TProduto = tProduto;
-	}
 	
 	
 	

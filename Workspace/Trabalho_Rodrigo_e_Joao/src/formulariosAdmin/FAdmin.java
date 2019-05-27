@@ -3,8 +3,6 @@ package formulariosAdmin;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,11 +11,8 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 
 import acao.Acao;
-import dados.Vetor;
 import formulario.AlterarDados;
 import formulario.Formulario;
-import produtos.Queijo;
-import produtos.Vinho;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -30,6 +25,7 @@ import javax.swing.JTable;
 
 public class FAdmin extends JFrame {
 
+	public static int indice;
 	private JPanel contentPane;
 	private JButton btnDepartamentos;
 	private JTextField txtPesquisa;
@@ -63,13 +59,11 @@ public class FAdmin extends JFrame {
 		scrollPane = new JScrollPane();
 		painelPesquisa = new JPanel();
 		
-		
 		painelDepartamentos.setBackground(new Color(0, 206, 209));
 		painelDepartamentos.setBounds(0, 0, 142, 270);
 		painelDepartamentos.setVisible(false);
 		painelDepartamentos.setLayout(null);
-		contentPane.add(painelDepartamentos);
-		
+		contentPane.add(painelDepartamentos);		
 		
 		painelPesquisa.setBackground(Color.LIGHT_GRAY);
 		painelPesquisa.setBounds(0, 80, 434, 179);
@@ -109,63 +103,50 @@ public class FAdmin extends JFrame {
 		
 		
 		
-		
-		
-		
-		
-		
 		//Design
 		btnDepartamentos.setBackground(Color.WHITE);
 		btnDepartamentos.setBorderPainted(false);
 		btnDepartamentos.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/3riscos.PNG")));
 		btnDepartamentos.setBounds(17, 22, 28, 14);
-		contentPane.add(btnDepartamentos);
-				
+		contentPane.add(btnDepartamentos);			
 		
 		btnCadastrar.setBackground(Color.WHITE);
 		btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnCadastrar.setBounds(287, 159, 125, 65);
-		contentPane.add(btnCadastrar);
-		
+		contentPane.add(btnCadastrar);	
 		
 		btnExcluir.setEnabled(false);
 		btnExcluir.setBackground(Color.WHITE);		
 		btnExcluir.setBounds(152, 159, 125, 65);
-		contentPane.add(btnExcluir);
-		
+		contentPane.add(btnExcluir);	
 		
 		btnAlterar.setEnabled(false);
 		btnAlterar.setBackground(Color.WHITE);
 		btnAlterar.setBounds(17, 159, 125, 65);
 		contentPane.add(btnAlterar);
-				
 		
 		setVisible(false);
 		btnPesquisar.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/pesquisar.PNG")));
 		btnPesquisar.setBounds(384, 55, 40, 25);
-		contentPane.add(btnPesquisar);
-		
+		contentPane.add(btnPesquisar);	
 			
 		btnSaiP.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/X c\u00F3pia.png")));
 		btnSaiP.setBorderPainted(false);
 		btnSaiP.setBackground(Color.LIGHT_GRAY);
 		btnSaiP.setBounds(405, 11, 19, 19);
-		painelPesquisa.add(btnSaiP);
-		
+		painelPesquisa.add(btnSaiP);	
 				
 		btnSai.setBackground(new Color(0, 206, 209));
 		btnSai.setBorderPainted(false);
 		btnSai.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/X c\u00F3pia.png")));
 		btnSai.setBounds(113, 11, 19, 19);
 		painelDepartamentos.add(btnSai);
-		
-		
+			
 		btnVinho.setFont(new Font("Calibri Light", Font.PLAIN, 20));
 		btnVinho.setBackground(new Color(0, 206, 209));
 		btnVinho.setBorderPainted(false);
 		btnVinho.setBounds(27, 73, 89, 23);
-		painelDepartamentos.add(btnVinho);
-		
+		painelDepartamentos.add(btnVinho);		
 		
 		btnQueijos.setFont(new Font("Calibri Light", Font.PLAIN, 20));
 		btnQueijos.setBackground(new Color(0, 206, 209));
@@ -177,8 +158,7 @@ public class FAdmin extends JFrame {
 		btnUsuario.setBorderPainted(false);		
 		btnUsuario.setIcon(new ImageIcon(FAdmin.class.getResource("/imagens/ima1 c\u00F3pia.png")));
 		btnUsuario.setBounds(390, 10, 34, 34);
-		contentPane.add(btnUsuario);
-		
+		contentPane.add(btnUsuario);	
 			
 		btnLogout.setBorderPainted(false);
 		btnLogout.setBackground(Color.WHITE);
@@ -209,12 +189,6 @@ public class FAdmin extends JFrame {
 		lblDepartamentos.setBounds(6, 11, 97, 19);
 		painelDepartamentos.add(lblDepartamentos);
 		
-		JLabel indice = new JLabel("");
-		indice.setBounds(229, 11, 48, 14);
-		indice.setVisible(false);
-		contentPane.add(indice);
-		
-
 		
 		
 		
@@ -228,10 +202,11 @@ public class FAdmin extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				
 				//Obter o índice
-				indice.setText(String.valueOf(table.getSelectedRow()));
+				indice = table.getSelectedRow();
 				
 				//Habilitar botões
 				painelPesquisa.setVisible(false);
+				txtPesquisa.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
 				btnCadastrar.setEnabled(false);
 				btnAlterar.setEnabled(true);
 				btnExcluir.setEnabled(true);
@@ -370,11 +345,19 @@ public class FAdmin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				String nome = table.getValueAt(Integer.parseInt(indice.getText()), 0).toString();
-				int excluir = JOptionPane.showConfirmDialog(null, "Deseja excluir o produto"+nome+"?");
+				String nome = table.getValueAt(indice, 0).toString();
+				String tipo = table.getValueAt(indice, 6).toString();
+			
+				int excluir = JOptionPane.showConfirmDialog(null, "Deseja excluir o produto "+nome+"?");
 				if (excluir == 0) {
 					
-					a.Excluir(nome);
+					if (tipo.equals("Vinho")) {
+						a.ExcluirVinho(nome);
+						table.setModel(a.tabelaVinho(nome));
+					}else if (tipo.equals("Queijo")) {
+						a.ExcluirQueijo(nome);
+						table.setModel(a.tabelaQueijo(nome));
+					}
 					
 					JOptionPane.showMessageDialog(null, nome+" excluido com sucesso!");
 					
@@ -404,112 +387,24 @@ public class FAdmin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				int index = Integer.parseInt(indice.getText());
+				int index = indice;
+				String tipo = table.getValueAt(indice, 6).toString();
 				String nome = table.getValueAt(index, 0).toString();
 				int confirm = JOptionPane.showConfirmDialog(null, "Deseja alterar as informações de "+nome+"?");
 				if (confirm == 0) {
 					
-					if (a.AnalisarVinho(nome) == true) {
+					if ((a.AnalisarVinho(nome) == true) && (tipo.equals("Vinho"))) {
 						
 						
-					String novonome = JOptionPane.showInputDialog("Insira o novo nome\nAtaul "+nome+"\nDeixe o campo em branco para manter o padrão atual");
-					if (novonome.equals("")) {
-						novonome = nome;
-					}
-					
-					String marca = JOptionPane.showInputDialog("Insira a nova marca\nAtual: "+Vetor.vetorVinho.get(index).getMarca()+"\nDeixe o campo em brancom para manter o padrão atual");
-					if (marca.equals("")) {
-						marca = Vetor.vetorVinho.get(index).getMarca();
-					}
-					
-					String origem = JOptionPane.showInputDialog("Insira o novo país de origem\nAtual: "+Vetor.vetorVinho.get(index).getPais()+"\nDeixe o campo em brancom para manter o padrão atual");
-					if (origem.equals("")) {
-						origem = Vetor.vetorVinho.get(index).getMarca();
-					}
-						
-					String valor = JOptionPane.showInputDialog("Insira o novo valor\nAtual: "+Vetor.vetorVinho.get(index).getValor()+"\nDeixe o campo em brancom para manter o padrão atual");
-					if (valor.equals("")) {
-						valor = ""+Vetor.vetorVinho.get(index).getValor();
-					}
-					
-					Object[] tipo = {"Seco", "Suave"};
-					String novotipo = "";
-					int tipoint = JOptionPane.showOptionDialog(null, "Escolha o novo tipo\nAtual: "+Vetor.vetorVinho.get(index).getTipo(), "", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, tipo, 0);
-					if (tipoint == 0) {
-						novotipo = "Seco";
-					}else if (tipoint == 1) {
-						novotipo = "Suave";
-					}
-					
-					Object[] cor = {"Branco", "Tinto"};
-					String novacor = "";
-					int corint = JOptionPane.showOptionDialog(null, "Escolha a nova cor\nAtual: "+Vetor.vetorVinho.get(index).getCor(), "", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, cor, 0);
-					if (corint == 0) {
-						novacor = "Branco";
-					}else if (corint == 1) {
-						novacor = "Tinto";
-					}
-					
-					Vinho v = new Vinho(novonome, origem, marca, Double.parseDouble(valor), novacor, novotipo, "Vinho");
-					Vetor.vetorVinho.set(index, v);
-					
+						a.alterarVin(nome, index);
+						table.setModel(a.tabelaVinho(nome));
 						
 					}
 					
-					if (a.AnalisarQueijo(nome) == true) {
+					if ((a.AnalisarQueijo(nome) == true) && (tipo.equals("Queijo"))) {
 						
-						
-						
-						String novonome = JOptionPane.showInputDialog("Insira o novo nome\nAtaul "+nome+"\nDeixe o campo em branco para manter o padrão atual");
-						if (novonome.equals("")) {
-							novonome = nome;
-						}
-						
-						String marca = JOptionPane.showInputDialog("Insira a nova marca\nAtual: "+Vetor.vetorQueijo.get(index).getMarca()+"\nDeixe o campo em brancom para manter o padrão atual");
-						if (marca.equals("")) {
-							marca = Vetor.vetorQueijo.get(index).getMarca();
-						}
-						
-						String origem = JOptionPane.showInputDialog("Insira o novo país de origem\nAtual: "+Vetor.vetorQueijo.get(index).getPais()+"\nDeixe o campo em brancom para manter o padrão atual");
-						if (origem.equals("")) {
-							origem = Vetor.vetorQueijo.get(index).getMarca();
-						}
-							
-						String valor = JOptionPane.showInputDialog("Insira o novo valor\nAtual: "+Vetor.vetorQueijo.get(index).getValor()+"\nDeixe o campo em brancom para manter o padrão atual");
-						if (valor.equals("")) {
-							valor = ""+Vetor.vetorQueijo.get(index).getValor();
-						}
-						
-						Object[] animal = {"Vaca", "Ovelha", "Cabra", "Búfala"};
-						String novoanimal = "";
-						int animalint = JOptionPane.showOptionDialog(null, "Escolha o novo animal de origem\nAtual: "+Vetor.vetorQueijo.get(index).getAnimal(), "", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, animal, 0);
-						if (animalint == 0) {
-							novoanimal = "Vaca";
-						}else if (animalint == 1) {
-							novoanimal = "Ovelha";
-						}else if (animalint == 2) {
-							novoanimal = "Cabra";
-						}else if (animalint == 3) {
-							novoanimal = "Búfala";
-						}
-						
-						Object[] textura = {"Macio", "Semimacio", "Semifirme", "Firme"};
-						String novatextura = "";
-						int textint = JOptionPane.showOptionDialog(null, "Escolha a nova textura\nAtual: "+Vetor.vetorQueijo.get(index).getTextura(), "", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, textura, 0);
-						if (textint == 0) {
-							novatextura = "Macio";
-						}else if (textint == 1) {
-							novatextura = "Semimacio";
-						}else if (textint == 2) {
-							novatextura = "Semifirme";
-						}else if (textint == 3) {
-							novatextura = "Firme";
-						}
-						
-						Queijo q = new Queijo(novonome, origem, marca, Double.parseDouble(valor), novoanimal, novatextura, "Queijo");
-						Vetor.vetorQueijo.set(index, q);	
-							
-						
+						a.alterarQjo(nome, index);
+						table.setModel(a.tabelaQueijo(nome));
 						
 					}
 					

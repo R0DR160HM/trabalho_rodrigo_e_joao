@@ -91,6 +91,14 @@ public class JCadastrar extends JFrame {
 		lblConsistncia.setBounds(10, 306, 72, 14);
 		contentPane.add(lblConsistncia);
 		
+		JLabel lblPreo = new JLabel("Pre\u00E7o");
+		lblPreo.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblPreo.setBounds(10, 339, 79, 14);
+		contentPane.add(lblPreo);
+		
+		
+		
+		//Botões
 		JButton btnCadastrar = new JButton("Cadastrar");		
 		btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnCadastrar.setBackground(Color.WHITE);
@@ -101,11 +109,6 @@ public class JCadastrar extends JFrame {
 		btnVoltar.setBackground(Color.WHITE);
 		btnVoltar.setBounds(10, 11, 70, 19);
 		contentPane.add(btnVoltar);
-		
-		JLabel lblPreo = new JLabel("Pre\u00E7o");
-		lblPreo.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblPreo.setBounds(10, 339, 79, 14);
-		contentPane.add(lblPreo);
 		
 		
 		
@@ -217,11 +220,28 @@ public class JCadastrar extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-			
+				try {
+				String nome = txtNome.getText();
+				String tipo = "";
+				
+				if(rdVinho.isSelected() == true) {
+					tipo = "Vinho";
+				}else if(rdQueijo.isSelected() == true) {
+					tipo = "Queijo";
+				}
+				
+				System.out.println(tipo);
+				
 				if (rdVinho.isSelected() == true) {
 					//Pega as informacoe e adiciona ao array
-					a.cadastrarVinho(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxCor.getSelectedItem().toString(), cbxTipo.getSelectedItem().toString(), "Vinho");				
 					
+					
+					
+					if(a.verificarCadastroVinho(nome, tipo) == true) {
+					a.cadastrarVinho(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxCor.getSelectedItem().toString(), cbxTipo.getSelectedItem().toString(), "Vinho");				
+					}else {
+						JOptionPane.showMessageDialog(null, "Este produto já está cadastrado");
+					}
 					//Limpa os campos
 					txtNome.setText("");
 					txtPais.setText("");
@@ -235,22 +255,33 @@ public class JCadastrar extends JFrame {
 				}else if (rdQueijo.isSelected() == true) {
 					
 					//Pega as informacoe e adiciona ao array
+					if(a.verificarCadastroQueijo(nome, tipo)) {
 					a.cadastrarQueijo(txtNome.getText(), txtPais.getText(), txtMarca.getText(), Double.parseDouble(txtPreco.getText()), cbxAnimal.getSelectedItem().toString(), cbxTex.getSelectedItem().toString(), "Queijo");					
+					}else {
+						JOptionPane.showMessageDialog(null, "Este produto já está cadastrado");
+					}
 					
-					//Limpa os campos
+				
 
-					txtNome.setText("");
-					txtPais.setText("");
-					txtMarca.setText("");
-					txtPreco.setText("");
-					cbxAnimal.setSelectedIndex(0);
-					cbxTex.setSelectedIndex(0);
 					
 					//O ponteiro volta ao nome
 					txtNome.requestFocus();
 				}else {
 					JOptionPane.showMessageDialog(null, "Selecione um tipo de produto");
 				}
+				
+				}catch (Exception erro) {
+					JOptionPane.showMessageDialog(null, "Insira um valor válido!");
+				}
+				
+				//Limpa os campos
+
+				txtNome.setText("");
+				txtPais.setText("");
+				txtMarca.setText("");
+				txtPreco.setText("");
+				cbxAnimal.setSelectedIndex(0);
+				cbxTex.setSelectedIndex(0);
 				
 			}
 		});

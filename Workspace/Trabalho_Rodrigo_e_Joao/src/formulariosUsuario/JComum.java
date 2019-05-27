@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import acao.Acao;
+import beans.Carrinho;
 import formulario.AlterarDados;
 import formulario.Formulario;
 
@@ -13,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,13 +23,16 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 public class JComum extends JFrame {
-
+	
+	public static double valor=0;
+	
 	private JPanel contentPane;
 	private JTextField txtPesquisa;
 	private JTable table;
-	private JTable table_1;
+	private JTable tableCarrinho;
 
 	//Criar tabela
 	public JComum() {
@@ -61,7 +67,7 @@ public class JComum extends JFrame {
 		
 		JPanel painelCarrinho = new JPanel();
 		painelCarrinho.setBackground(new Color(215, 255, 15));
-		painelCarrinho.setBounds(242, 0, 213, 193);
+		painelCarrinho.setBounds(172, 0, 283, 193);
 		painelCarrinho.setVisible(false);
 		painelCarrinho.setLayout(null);
 		panel.add(painelCarrinho);
@@ -78,6 +84,17 @@ public class JComum extends JFrame {
 		panel_3.setBounds(435, 100, -94, 161);
 		panel.add(panel_3);
 		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(10, 41, 263, 115);
+		painelCarrinho.add(panel_4);
+		panel_4.setLayout(null);
+		
+		JPanel painelPesquisa = new JPanel();
+		painelPesquisa.setBackground(Color.LIGHT_GRAY);
+		painelPesquisa.setBounds(10, 89, 435, 104);
+		painelPesquisa.setVisible(false);
+		painelPesquisa.setLayout(null);
+		panel.add(painelPesquisa);
 		
 		
 		//Botões
@@ -142,27 +159,53 @@ public class JComum extends JFrame {
 		btnQueijos.setBounds(27, 139, 95, 23);
 		painelDepartamentos.add(btnQueijos);
 		
-		table_1 = new JTable();
-		
-		JScrollPane tableCarrinho = new JScrollPane();
-		tableCarrinho.setBounds(10, 41, 193, 141);
-		tableCarrinho.setViewportView(table_1);
-		painelCarrinho.add(tableCarrinho);
+		JButton btnSaiP = new JButton("");
+		btnSaiP.setIcon(new ImageIcon(JComum.class.getResource("/imagens/X c\u00F3pia.png")));
+		btnSaiP.setBorderPainted(false);
+		btnSaiP.setBackground(Color.LIGHT_GRAY);
+		btnSaiP.setBounds(408, 4, 19, 19);
+		painelPesquisa.add(btnSaiP);
 		
 		
 		
 		//Rótulos
 		JLabel lblCarrinhoDeCompras = new JLabel("Carrinho de Compras");
 		lblCarrinhoDeCompras.setFont(new Font("Microsoft YaHei Light", Font.ITALIC, 14));
-		lblCarrinhoDeCompras.setBounds(39, 11, 154, 19);		
+		lblCarrinhoDeCompras.setBounds(31, 11, 140, 19);		
 		painelCarrinho.add(lblCarrinhoDeCompras);
+		
+		JLabel lblTotal = new JLabel("");
+		lblTotal.setBounds(215, 1, 48, 14);
+		panel_4.add(lblTotal);
+		
+		JLabel lblValorT = new JLabel(); 
+		lblValorT.setText("Total de R$ "+valor);
+		lblValorT.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblValorT.setHorizontalAlignment(SwingConstants.CENTER);
+		lblValorT.setBounds(10, 167, 263, 19);
+		painelCarrinho.add(lblValorT);
 		
 		JLabel label = new JLabel("Departamentos");
 		label.setFont(new Font("Microsoft YaHei Light", Font.ITALIC, 14));
 		label.setBounds(10, 11, 97, 19);
 		painelDepartamentos.add(label);
 		
+		JLabel indice = new JLabel("");
+		indice.setBounds(139, 17, 48, 14);
+		panel.add(indice);
+		indice.setVisible(false);
+		
 
+		
+		//Tabela e ScrollPane
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(0, 0, 263, 115);
+		panel_4.add(scrollPane_1);
+		
+		tableCarrinho = new JTable();
+		scrollPane_1.setViewportView(tableCarrinho);
+		
+		
 		
 		//Campo de texto
 		txtPesquisa = new JTextField();
@@ -170,19 +213,7 @@ public class JComum extends JFrame {
 		txtPesquisa.setColumns(10);
 		panel.add(txtPesquisa);
 		
-		JPanel painelPesquisa = new JPanel();
-		painelPesquisa.setBackground(Color.LIGHT_GRAY);
-		painelPesquisa.setBounds(10, 89, 435, 104);
-		painelPesquisa.setVisible(false);
-		painelPesquisa.setLayout(null);
-		panel.add(painelPesquisa);
-		
-		JButton btnSaiP = new JButton("");
-		btnSaiP.setIcon(new ImageIcon(JComum.class.getResource("/imagens/X c\u00F3pia.png")));
-		btnSaiP.setBorderPainted(false);
-		btnSaiP.setBackground(Color.LIGHT_GRAY);
-		btnSaiP.setBounds(408, 4, 19, 19);
-		painelPesquisa.add(btnSaiP);
+
 		
 		
 
@@ -194,6 +225,85 @@ public class JComum extends JFrame {
 		painelPesquisa.add(scrollPane);
 		scrollPane.setViewportView(table);
 		
+
+		
+		
+		//Ação da tabela para comprar
+		table.addMouseListener(new MouseAdapter() {
+					
+			public void mouseReleased(MouseEvent e) {
+						
+			//Obter o índice
+			indice.setText(String.valueOf(table.getSelectedRow()));
+						
+			//Habilitar botões
+			painelPesquisa.setVisible(false);
+			
+			//Pegar o nome
+			String nome = table.getValueAt(Integer.parseInt(indice.getText()), 0).toString();
+			Double valor1 = ((Double.parseDouble(table.getValueAt(Integer.parseInt(indice.getText()), 3).toString())));
+			
+			int comprar = JOptionPane.showConfirmDialog(null, "Deseja comprar o produto "+nome+" no valor de R$"+valor1+" ?");
+			
+			switch(comprar) {
+			
+			case 0:
+				int qtd = Integer.parseInt(JOptionPane.showInputDialog("Informe a quantidade a ser comprada do produto "+nome));
+				
+				
+				JOptionPane.showMessageDialog(null, "Produto adicionado ao carrinho");
+				btnDepartamentos.setEnabled(true);
+				btnDepartamentos.setVisible(true);				
+				btnUsuario.setEnabled(true);				
+				btnPesquisar.setEnabled(true);				
+				btnLogout.setEnabled(true);
+				btnCarrinho.setEnabled(true);
+				txtPesquisa.setEnabled(true);
+				txtPesquisa.setText("");
+				txtPesquisa.requestFocus();
+				
+				Carrinho b = new Carrinho();
+				b.setNome(nome);
+				b.setQtd(qtd);
+				b.setValorUn(Double.parseDouble(table.getValueAt(Integer.parseInt(indice.getText()), 3).toString()));
+				
+				if(table.getValueAt(Integer.parseInt(indice.getText()), 6).toString().equals("Vinho")) {
+					b.setProduto("Vinho");
+				}else {
+					b.setProduto("Queijo");
+				}
+				
+				
+				double qtdF = valor1* qtd;				
+				
+				valor = a.total(qtdF);
+				lblValorT.setText("Total de R$"+valor);
+				
+				
+				
+				a.adicionarCarrinho(b);		
+			break;
+			
+			
+			case 1:
+				JOptionPane.showMessageDialog(null, "Compra cancelada");
+				btnDepartamentos.setEnabled(true);
+				btnDepartamentos.setVisible(true);				
+				btnUsuario.setEnabled(true);				
+				btnPesquisar.setEnabled(true);				
+				btnLogout.setEnabled(true);
+				btnCarrinho.setEnabled(true);
+				txtPesquisa.setEnabled(true);
+				txtPesquisa.setText("");
+				txtPesquisa.requestFocus();
+				break;	
+			}
+						
+		}
+					
+	});
+		
+		
 				//Botão para sair da tabela de pesquisa
 		btnSaiP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -203,9 +313,11 @@ public class JComum extends JFrame {
 				btnUsuario.setEnabled(true);				
 				btnPesquisar.setEnabled(true);				
 				btnLogout.setEnabled(true);
+				btnCarrinho.setEnabled(true);
 				txtPesquisa.setEnabled(true);
 				txtPesquisa.setText("");
 				txtPesquisa.requestFocus();
+			
 			}
 		});
 		
@@ -294,6 +406,7 @@ public class JComum extends JFrame {
 					btnUsuario.setEnabled(false);					
 					btnPesquisar.setEnabled(false);					
 					btnLogout.setEnabled(false);
+					btnCarrinho.setEnabled(false);
 					txtPesquisa.setEnabled(false);
 					table.setModel(a.atualizar(text));
 					
@@ -320,6 +433,9 @@ public class JComum extends JFrame {
 				btnCarrinho.setVisible(false);
 				painelCarrinho.setVisible(true);
 				
+				//Atualizar tabela
+				tableCarrinho.setModel(a.carrinho());
+				lblValorT.setText("Total de R$"+valor);
 			}
 		});
 		

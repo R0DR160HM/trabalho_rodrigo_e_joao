@@ -12,13 +12,18 @@ public static void main(String[] args) {
 			Acao a = new Acao();
 			Atributos at = new Atributos();
 			
+			
+			
 			//Cadastrar usuário administrador (padrão) ao iniciar
 			at.setAdmin(true);
 			at.setData(a.data());
 			at.setEmail("admin@entra21.com");
 			at.setHora(a.horario());
-			at.setSenha("java");
+			at.setSenha("java>>all");
+			at.setNascimento("25/12/0001");
 			a.cadastrarUsuarios(at);
+			
+			
 			
 			//Instanciar um objeto da classe Formulario (login) e exibi-lo
 			Formulario frame = new Formulario();

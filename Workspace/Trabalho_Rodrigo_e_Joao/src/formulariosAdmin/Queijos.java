@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import acao.Acao;
+import dados.Vetor;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -15,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class Queijos extends JFrame {
@@ -33,8 +36,12 @@ public class Queijos extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		
+		
 		//Instanciar objeto da classe Acao
 		Acao a = new Acao();
+		
+		
 		
 		//Campos de texto
 		txtPesquisa = new JTextField();
@@ -93,6 +100,44 @@ public class Queijos extends JFrame {
 			frame.setVisible(true);
 			}
 		});
+		
+		//Ação da tabela
+				table.addMouseListener(new MouseAdapter() {
+					
+					public void mouseReleased(MouseEvent e) {
+						
+						//Obter o índice
+						FAdmin.indice = table.getSelectedRow();
+						
+						int index = FAdmin.indice;
+						String nome = table.getValueAt(index, 0).toString();
+						
+						Object[] objeto = {"Alterar", "Excluir", "Cancelar"};
+						int acao = JOptionPane.showOptionDialog(null, "Escolha a ação que deseja realizar com "+Vetor.vetorQueijo.get(FAdmin.indice).getNome(), "", JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE, null, objeto, 0);
+						
+						switch (acao) {
+						case 0:
+						
+							a.alterarQjo(nome, index);
+							table.setModel(a.tabelaQueijo(nome));
+							
+						break;
+						case 1:
+							
+							a.ExcluirQueijo(nome);
+							table.setModel(a.tabelaQueijo(nome));
+							
+						break;
+						case 2:
+							
+							
+							
+						break;
+						}
+						
+					}
+					
+				});
 		
 		//Acao do botao Pesquisar
 		btnPesquisar.addActionListener(new ActionListener() {
